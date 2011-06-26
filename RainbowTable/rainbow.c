@@ -22,15 +22,16 @@ char *hash(char *password) {
         return NULL;
     }
 
-    password= crypt(password, salt);
+    password = strdup(crypt(password, salt));
 
     return password;
 }
 
 /*
- * Funkcja redukująca. Zwraca łańcuch po przeprowadzeniu redukcji.
+ * Funkcja redukująca. Zwraca łańcuch po przeprowadzeniu redukcji. Należy podać głębokość
+ * tablicy tęczowej.
  */
-char *reduce(char *hash) {
+char *reduce(char *hash, int deep) {
     char *red_hash;
     int red = 5;
     int i, j;
@@ -70,18 +71,16 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
     char *h;
     char *r;
 
-    /*Alokacja pamięci dla tablicy*/
     char ***rainbowtab = (char ***) malloc(n * sizeof (char **));
 
     for (i = 0; i < n; i++) {
         *(rainbowtab + i) = (char **) malloc(deep * sizeof (char *));
-        for (j = 0; j < deep; j++)
-            *(*(rainbowtab + i) + j) = (char *) malloc(DES_CHARS_NUM * sizeof (char));
     }
 
     if (rainbowtab == NULL) {
-        fprintf(stderr, "Nie mozna przydzielic pamieci 05");
+        fprintf(stderr, "Nie mozna przydzielic pamieci 02");
         return NULL;
+        *(*(rainbowtab + i) + j) = (char *) malloc(DES_CHARS_NUM * sizeof (char));
     }
 
     char *tmp;
@@ -104,15 +103,10 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
             if (i == deep - 1) {
                 tmp = hash(r);
                 rainbowtab[j][1] = tmp;
-                printf("tmp[%d]: %s\n", j, rainbowtab[j][1]);
             }
         }
 
         rainbowtab[j][0] = *(wordstab + j);
-    }
-
-    for (i = 0; i < n; i++) {
-        printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
     }
 
     return rainbowtab;
