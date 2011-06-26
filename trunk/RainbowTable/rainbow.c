@@ -30,6 +30,10 @@ char *hash(char *password) {
 /*
  * Funkcja redukująca. Zwraca łańcuch po przeprowadzeniu redukcji. Należy podać głębokość
  * tablicy tęczowej.
+ *
+ * min_length
+ * max_length
+ * charset: num, alpha, alphanum
  */
 char *reduce(char *hash, int deep) {
     char *red_hash;
@@ -95,6 +99,7 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
                 h = (char *) hash(r);
             }
 
+
             if (i % 2 != 0) {
                 r = (char *) reduce(h, 0);
             }
@@ -107,6 +112,11 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
 
         rainbowtab[j][0] = *(wordstab + j);
     }
+    
+    for (i = 0; i < n; i++) {
+        printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
+    }
+
 
     return rainbowtab;
 }
