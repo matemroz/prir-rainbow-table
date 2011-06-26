@@ -1,23 +1,3 @@
-/* 
- * File:   sorter.h
- * Author: mateusz
- *
- * Created on 25 czerwiec 2011, 11:04
- */
+void swap(char **str1, char **str2);
 
-#ifndef SORTER_H
-#define	SORTER_H
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
-
-
-
-#ifdef	__cplusplus
-}
-#endif
-
-#endif	/* SORTER_H */
-
+void quicksort(char* rainbowTable[][2], int l, int r);

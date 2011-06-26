@@ -13,17 +13,14 @@ rainbowtab: $(OBJS)
 main.o: main.c
 	$(CC) $(CFLAGS) main.c
 
-file_manager.o: file_manager.c file_manager.h
-	$(CC) $(CFLAGS) file_manager.c
+file_reader.o: file_reader.c
+	$(CC) $(CFLAGS) file_reader.c
 
 rainbow.o: rainbow.c rainbow.h
 	$(CC) $(CFLAGS) rainbow.c $(LIBS)
 
 rainbow_cracker.o: rainbow_cracker.c rainbow_cracker.h
 	$(CC) $(CFLAGS) rainbow_cracker.c
-
-file_manager.o: file_manager.c file_manager.h
-	$(CC) $(CFLAGS) file_manager.c
 
 clean:
 	$(RM) *.o rainbowtab
