@@ -16,15 +16,13 @@
 char *hash(char *password) {
 
     char salt[3] = "AB";
-    int a;
-    int b;
 
     if (strcmp(password, "") == 0) {
         fprintf(stderr, "Nie podano hasza, ktore ma byc poddane haszowaniu!");
-        return "";
+        return NULL;
     }
 
-    password = crypt(password, salt);
+    password= crypt(password, salt);
 
     return password;
 }
@@ -47,6 +45,11 @@ char *reduce(char *hash) {
 
     red_hash = (char *) malloc(strlen(hash) * sizeof (char));
 
+    if (red_hash == NULL) {
+        fprintf(stderr, "Nie mozna przydzielic pamieci 01");
+        return NULL;
+    }
+
     while (*(hash + i) != '\0') {
         if ((i >= red) && (*(hash + i) != '.') && (*(hash + i) != '/')) {
             *(red_hash + j++) = *(hash + i);
@@ -61,55 +64,55 @@ char *reduce(char *hash) {
  * Funkcja zwracająca dwuwymiarową tablicę tęczową, o danej głębokości i rozmiarze. Jako
  * argument otrzymuje również listę wyrazów, z których będą generowane ciągi.
  */
-char*** createRainbowTable(char *wordstab[], int deep, int n) {
-
-    char *k;
-    char *h;
-    char *r;
-    char *p;
+char*** createRainbowTable(char **wordstab, int deep, int n) {
     int i;
     int j;
+    char *h;
+    char *r;
 
     /*Alokacja pamięci dla tablicy*/
     char ***rainbowtab = (char ***) malloc(n * sizeof (char **));
+
     for (i = 0; i < n; i++) {
-        rainbowtab[i] = (char **) malloc(deep * sizeof (char *));
+        *(rainbowtab + i) = (char **) malloc(deep * sizeof (char *));
         for (j = 0; j < deep; j++)
-            rainbowtab[i][j] = (char *) malloc(DES_CHARS_NUM * sizeof (char));
+            *(*(rainbowtab + i) + j) = (char *) malloc(DES_CHARS_NUM * sizeof (char));
     }
 
+    if (rainbowtab == NULL) {
+        fprintf(stderr, "Nie mozna przydzielic pamieci 05");
+        return NULL;
+    }
+
+    char *tmp;
     for (j = 0; j < n; j++) {
+
         for (i = 0; i < deep; i++) {
 
             if (i == 0) {
-                h = (char *) malloc(DES_CHARS_NUM * sizeof (char));
-                h = hash(wordstab[j]); \
-	printf("rainbow[%d][%d]=%s\n", j, i, h);
+                h = (char *) hash(*(wordstab + j));
             }
 
             if (i > 0 && i % 2 == 0) {
-                h = (char *) malloc(DES_CHARS_NUM * sizeof (char));
-                h = hash(r);
-                printf("rainbow[%d][%d]=%s\n", j, i, h);
+                h = (char *) hash(r);
             }
 
             if (i % 2 != 0) {
-                r = (char *) malloc(RED_CHARS_NUM * sizeof (char));
-                r = reduce(h);
-                printf("rainbow[%d][%d]=%s\n", j, i, r);
+                r = (char *) reduce(h);
             }
 
             if (i == deep - 1) {
-                k = (char *) malloc(DES_CHARS_NUM * sizeof (char));
-                k = hash(r);
+                tmp = hash(r);
+                rainbowtab[j][1] = tmp;
+                printf("tmp[%d]: %s\n", j, rainbowtab[j][1]);
             }
         }
 
-        rainbowtab[j][0] = wordstab[j];
-        rainbowtab[j][1] = k;
+        rainbowtab[j][0] = *(wordstab + j);
+    }
 
-        printf("%s\n", rainbowtab[j][0]);
-        printf("%s\n", rainbowtab[j][1]);
+    for (i = 0; i < n; i++) {
+        printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
     }
 
     return rainbowtab;
