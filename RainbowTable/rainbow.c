@@ -80,7 +80,6 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
     if (rainbowtab == NULL) {
         fprintf(stderr, "Nie mozna przydzielic pamieci 02");
         return NULL;
-        *(*(rainbowtab + i) + j) = (char *) malloc(DES_CHARS_NUM * sizeof (char));
     }
 
     char *tmp;
@@ -97,7 +96,7 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
             }
 
             if (i % 2 != 0) {
-                r = (char *) reduce(h);
+                r = (char *) reduce(h, 0);
             }
 
             if (i == deep - 1) {
