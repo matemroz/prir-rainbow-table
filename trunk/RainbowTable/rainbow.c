@@ -88,31 +88,35 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
 
     char *tmp;
     for (j = 0; j < n; j++) {
+        printf("lancuch[%d]:\n", j);
 
         for (i = 0; i < deep; i++) {
 
             if (i == 0) {
+                printf("rainbowtab[%d][0]=wordstab[%d]\n", j,j);
                 h = (char *) hash(*(wordstab + j));
+                printf("rainbowtab1[%d][%d]=%s\n", j, i + 1, h);
             }
 
             if (i > 0 && i % 2 == 0) {
                 h = (char *) hash(r);
+                printf("rainbowtab2[%d][%d]=%s\n", j, i + 1, h);
             }
 
 
             if (i % 2 != 0) {
                 r = (char *) reduce(h, 0);
+                printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
             }
 
             if (i == deep - 1) {
-                tmp = hash(r);
-                rainbowtab[j][1] = tmp;
+                rainbowtab[j][1] = h;
             }
         }
 
         rainbowtab[j][0] = *(wordstab + j);
     }
-    
+
     for (i = 0; i < n; i++) {
         printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
     }
