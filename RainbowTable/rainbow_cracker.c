@@ -1,5 +1,8 @@
 /*rainbow_cracker.c*/
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define MAX_TAB_SIZE 1024
 #define MAX_PASS_SIZE 10
  
@@ -13,34 +16,36 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize,int depth){
 	int p = tabSize-1;//koniec tablicy
 	int s = 0;//środek tablicy
 	int hashFound = 0;//czy znaleziono hash
-	int i;
-	char *hashTmp;
-	char *passTmp;
+	int i;//zmienna pomocnicza - iterator
+	char *hashTmp;//zmienna pomocnicza przechowujaca hash
+	char *passTmp;//zmienna pomocnicza przechowujaca haslo
 
-
-
+	/*
+	//wypisanie tablicy przekazanej do funkcji
+	printf("Do funkcji crackPassword przekazano nastepujaca tablice:\n");
 	for (i = 0; i < tabSize; i++) {
 		printf("%s -> %s\n", rainbowTable[i][0], rainbowTable[i][1]);
 	}
+	printf("---\n");
+	*/
 
+	/* Wyszukiwanie zadanego hasha w tablicy teczowej */
 	i = depth;
 	hashTmp = str;
 	while ((i > 0) && (hashFound == 0)) {
-		//wyszukanie hasha w tabeli
-		printf("%d\n",i);
-		while ((l < p) && (hashFound == 0)) {
+		while ((l <= p) && (hashFound == 0)) {
 			s = ( l + p )/2;
-			printf("%d,%d,%d\n",l,s,p);
+			//printf("%d %d %d\n",l,s,p);
 			if (strcmp(rainbowTable[s][1],hashTmp) > 0) {
-				printf("%s ? %s = %d\n",rainbowTable[s][1],hashTmp,strcmp(rainbowTable[s][1],hashTmp));
-				p = s;
+				//printf("Porownuje: %s ? %s = %d\n",rainbowTable[s][1],hashTmp,strcmp(rainbowTable[s][1],hashTmp));
+				p = s - 1;
 			}
 			else if (strcmp(rainbowTable[s][1],hashTmp) < 0) {
-				printf("%s ? %s = %d\n",rainbowTable[s][1],hashTmp,strcmp(rainbowTable[s][1],hashTmp));
-				l = s;
+				//printf("Porownuje: %s ? %s = %d\n",rainbowTable[s][1],hashTmp,strcmp(rainbowTable[s][1],hashTmp));
+				l = s + 1;
 			}
 			else {
-				printf("Znaleziono hash: %s\n", hashTmp);
+				printf("Znaleziono hash: %s w %d wierszu\n", hashTmp,s);
 				hashFound = 1;
 			}
 		}
@@ -48,11 +53,11 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize,int depth){
 
 		if (hashFound == 0) {
 			/*recukcja i zahashowanie szukanego stringa*/
-			printf("%s->",hashTmp);
-			hashTmp = reduce(hashTmp);
-			printf("%s->",hashTmp);
-			hashTmp = hash(hashTmp);
-			printf("%s\n",hashTmp);
+			//printf("Przekształcam: %s->",hashTmp);
+			hashTmp = (char *)reduce(hashTmp,1);
+			//printf("%s->",hashTmp);
+			hashTmp = (char *)hash(hashTmp);
+			//printf("%s\n",hashTmp);
 			/*ponowne ustawienie poczatku i konca tablicy*/
 			l = 0;
 			p = tabSize - 1;
@@ -64,20 +69,20 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize,int depth){
 		return;
 	}
 
-
+	/* Wyszukiwanie zadanego hasha w lancuchu */
 	printf("Szukany hash: %s\n",str);
 	passTmp = rainbowTable[s][0];
 	while (depth > 0) {
-		hashTmp = hash(passTmp);
-		printf("[Wyszukiwanie w łancuchu:] %s -> %s \n", passTmp, hashTmp);
+		hashTmp = (char *)hash(passTmp);
+		//printf("[Wyszukiwanie w łancuchu:] %s -> %s \n", passTmp, hashTmp);
 			if (strcmp(hashTmp,str) == 0) {
-				printf("Haslo to: %s\n",passTmp);
+				printf("-----------------------------\nHaslo to: %s\n-----------------------------\n",passTmp);
 				return;
 			}
-		passTmp = reduce(hashTmp);
+		passTmp = (char *)reduce(hashTmp,1);
 		depth--;
 	}
 
-	printf("Nastapil blad podczas odzyskiwania hasla z lancucha");
+	printf("Nastapil blad podczas odzyskiwania hasla z lancucha!\n");
 
 }
