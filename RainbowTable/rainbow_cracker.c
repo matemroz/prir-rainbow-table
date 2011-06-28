@@ -55,7 +55,7 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize,int depth,int pa
 		if (hashFound == 0) {
 			/*recukcja i zahashowanie szukanego stringa*/
 			printf("Przeksztalcam: %s->",hashTmp);
-			hashTmp = (char *)reduce(hashTmp,depth,strlen(hashTmp),passw_type);
+			hashTmp = (char *)reduce(hashTmp,i,strlen(hashTmp),passw_type);
 			printf("%s->",hashTmp);
 			hashTmp = (char *)hash(hashTmp);
 			printf("%s\n",hashTmp);
@@ -81,7 +81,7 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize,int depth,int pa
 				printf("-----------------------------\nHaslo to: %s\n-----------------------------\n",passTmp);
 				return;
 			}
-		passTmp = (char *)reduce(hashTmp,i,strlen(hashTmp),passw_type);
+		passTmp =(char *)reduce(hashTmp,depth,10,passw_type);
 		i++;
 	}
 
