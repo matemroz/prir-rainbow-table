@@ -1,4 +1,4 @@
-CC=cc
+CC=mpicc
 RM=rm
 CCFLAGS=-c -Wall --pedantic
 CFLAGS=-c
