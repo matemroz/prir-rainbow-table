@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
     int dest;
     int src = 0;
     int i = 0;
+    char * msgStream;
 
 
     //char *tab[28] = {"asdas", "fjgja", "xijff", "wijff", "eijff", "oqijff", "yeyjff", "ieqief", "iqiff", "ssadaf", "yeyjff", "ieqief", "iqiff", "ssadaf","asdas", "fjgja", "xijff", "wijff", "eijff", "oqijff", "yeyjff", "ieqief", "iqiff", "ssadaf", "yeyjff", "ieqief", "iqiff", "ssadaf"};
@@ -71,19 +72,53 @@ int main(int argc, char *argv[]) {
     if (rank == 0) {
     	//TODO zczytanie argumentow uruchomienia
 
-    	printf("pass %d\n",passCount);
+    	printf("passCount: %d\n",passCount);
     	/* obliczenie wielkosci czesci tablicy przydzielanych dla kazdego procesu */
     	workSize = passCount / size;
     	workRestSize = passCount % size;
 
     	for (dest = 1; dest < size; dest++) {
     		MPI_Send(&workSize,1,MPI_INT,dest,TAG,MPI_COMM_WORLD);//wyslanie wiadomosci o ilosci przydzielonych hasel
-    	}
 
+    	msgStream = (char *)malloc(workSize*(passSize+1)*sizeof(char));//alokacja pamieci dla lancucha skladajacego sie z napisow czesci tablicy
+    	/* Laczenie napisow, gdzie '\n' oddziela poszczegolne wyrazy*/
+    	i = (dest-1)*workSize;
+    	while (i < workSize*dest) {
+    		strcat(msgStream,passTab[i]);
+    		strcat(msgStream,"\n");
+    		i++;
+    	}
+    	//printf("Wynik polaczenia[rozmiar: %d]:\n%s\n",strlen(msgStream),msgStream);
+
+    	MPI_Send(msgStream,strlen(msgStream)+1,MPI_CHAR,dest,TAG,MPI_COMM_WORLD);//wyslanie lancucha z polaczonymi haslami
+
+    	free(msgStream);
+    	}
     	//TODO wyslanie danych przez rodzica
     } else {
     	//TODO zczytanie danych przez potomkow
     	MPI_Recv(&workSize,1,MPI_INT,0,TAG,MPI_COMM_WORLD,&status);//odebranie wiadomosci o ilosci przydzielonych hasel
+
+    	msgStream = (char *)malloc(workSize*(passSize+1)*sizeof(char));
+
+    	MPI_Recv(msgStream,workSize*(passSize+1),MPI_CHAR,0,TAG,MPI_COMM_WORLD,&status);//odebranie lancucha z polaczonymi haslami
+    	printf("Odebrano lancuch[rozmiar: %d]:\n%s\n",strlen(msgStream),msgStream);
+
+    	passTab = (char **)malloc(workSize*sizeof(char *));
+    	for (i = 0; i < workSize; i++){
+    		passTab[i] = (char *)malloc(passSize*sizeof(char));
+    	}
+
+    	char *recvPass = strtok(msgStream,"\n");
+    	while (recvPass != NULL) {
+    		//strcpy(passTab[i],recvPass);//TUTAJ JEST COS KURWA NIE TAK!!
+    		recvPass = strtok(NULL,"\n");
+    	}
+
+    	for (i = 0; i < workSize; i++){
+    		printf("Otrzymana tablica[%d]:%s\n",i,passTab[i]);
+    	}
+
     }
 
     /* GENEROWANIE LANCUCHOW */
