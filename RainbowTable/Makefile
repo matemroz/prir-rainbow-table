@@ -3,7 +3,7 @@ RM=rm
 CCFLAGS=-c -Wall --pedantic
 CFLAGS=-c
 LIBS=-lcrypt
-OBJS=main.o file_reader.o rainbow.o rainbow_cracker.o sorter.o
+OBJS=main.o file_reader.o rainbow.o rainbow_cracker.o sorter.o formatter.o file_writer.o
 
 all: rainbowtab
 
@@ -21,6 +21,12 @@ rainbow.o: rainbow.c rainbow.h
 
 rainbow_cracker.o: rainbow_cracker.c rainbow_cracker.h
 	$(CC) $(CFLAGS) rainbow_cracker.c
+
+formatter.o: formatter.c
+	$(CC) $(CFLAGS) formatter.c
+
+file_writer.o: file_writer.c
+	$(CC) $(CFLAGS) file_writer.c
 
 clean:
 	$(RM) *.o rainbowtab
