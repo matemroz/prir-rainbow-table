@@ -1,4 +1,4 @@
 /*file_reader.h*/
 
-int readPassFile(char *, int ) {
+char** readPassFile(char *, int ) {
 }
