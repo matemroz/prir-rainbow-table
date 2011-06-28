@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "file_reader.h"
+
 #define DEFAULT_PASS_NUM 1024
 
 char** readPassFile(char* filename, int maxCharacters) {
