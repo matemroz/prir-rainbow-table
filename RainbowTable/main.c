@@ -1,9 +1,13 @@
 /*main.c*/
 
 #include <stdio.h>
-//#include "mpi.h"
+#include <stdlib.h>
+#include <string.h>
+#include "mpi.h"
 
 #define MAXSIZE 1024
+#define TAG 1
+
 
 int main(int argc, char *argv[]) {
 
@@ -12,102 +16,89 @@ int main(int argc, char *argv[]) {
 
     int rank; /* numer procesu */
     int size; /* ilosc procesow */
-    int depth; /* glebokosc lancucha teczowego */
-    int passSize; /* dlugosc hasla */
+    int depth = 5; /* glebokosc lancucha teczowego */
+    int passSize = 10; /* dlugosc hasla */
+    char **passTab;
+    char ***rainbowTab;
+    int passCount = 0;
+    int workSize = 0;
+    int workRestSize = 0;
+    int dest;
+    int src = 0;
+    int i = 0;
 
 
-/*
-    char *tab[6][2] = {
-        {"jaifd", "blablablabl"},
-        {"fafaf", "iahdfoahafh"},
-        {"fafaf", "zahdfoahafh"},
-        {"fafaf", "aahdfoahafh"},
-        {"fafaf", "cahdfoahafh"},
-        {"fafaf", "tahdfoahafh"}
+    //char *tab[28] = {"asdas", "fjgja", "xijff", "wijff", "eijff", "oqijff", "yeyjff", "ieqief", "iqiff", "ssadaf", "yeyjff", "ieqief", "iqiff", "ssadaf","asdas", "fjgja", "xijff", "wijff", "eijff", "oqijff", "yeyjff", "ieqief", "iqiff", "ssadaf", "yeyjff", "ieqief", "iqiff", "ssadaf"};
+    /* utworzenie tablicy teczowej */
+    //char*** rainbowTab = (char ***) createRainbowTable(tab, depth, passCount);
+    /* posortowanie utworzonej tablicy */
+    //quicksort(rainbowTab, 0, passCount-1);
 
-    };
+    /*
+    	int i;
+        for (i = 0; i < passCount; i++) {
+            printf("%s\n", rainbowTab[i][1]);
+            if(i != passCount-1) {
+            	printf("[wynik sortowania:%d-%d] %s <-> %s = %d\n",i,i+1,rainbowTab[i][1],rainbowTab[i+1][1],strcmp(rainbowTab[i][1],rainbowTab[i+1][1]));
+            }
+        }
+	*/
 
-    quicksort(tab, 0, 6);
+    //crackPassword("ABXIo/MRLE2F.",rainbowTab,passCount,depth);
 
-    int i;
 
-    for (i = 0; i < 6; i++) {
-        printf("%s\n", tab[i][1]);
-    }*/
 
-    char *tab[22][2] = {
-        {"jaifd", "blablablabl"},
-        {"fafaf", "iahdfoahafh"},
-        {"fjaid", "aiuoihahfof"},
-        {"idafh", "idafjhaifia"},
-        {"jdfai", "dupadupadup"},
-        {"aojfa", "oajfhafhiah"},
-        {"jaifh", "aojfjaihihf"},
-        {"dfghh", "zjdfajfiadi"},
-        {"fkaof", "dojfafdojfa"},
-        {"fkaof", "wojfafdojfa"},
-        {"fkaof", "dojfafdojfa"},
-        {"fkaof", "3ojfafdojfa"},
-        {"fkaof", "1ojfafdojfa"},
-        {"fkaof", "6ojfafdojfa"},
-        {"fkaof", "dsafafdojfa"},
-        {"fkaof", "1ojfafdojfa"},
-        {"fkaof", "dljfafdojfa"},
-        {"fkaof", "zmjfafdojfa"},
-        {"fkaof", "zmjfafdojfa"},
-        {"fkaof", "Zmjfafdojfa"},
-        {"fkaof", "dajfafdojfa"},
-        {"adfjo", "aadfjaofajo"}
-    };
+    /* INICJALIZACJA MPI */
+    MPI_Init( 0, 0 );
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+    MPI_Status status;
 
-    quicksort(tab, 0, 22);
-    int i;
+    if (rank == 0) {
+       	//TODO zczytanie argumentow uruchomienia
 
-    for (i = 0; i < 22; i++) {
-        printf("%s\n", tab[i][1]);
+       	/* pobranie tablicy hasel z pliku */
+       	passTab = (char**)readPassFile("test.txt",passSize);
+       	/* zliczenie ilosci pobranych hasel */
+       	while(passTab[passCount] != 0) {
+       		passCount++;
+       	}
     }
 
-     
-    //printf("%s\n", hash("adasd"));
-
-    //readPassFile("test.txt",10);
-    /*char *tab[10] = {"asdas", "fjgja", "eijff", "wijff", "eijff", "oqijff", "yeyjff", "ieqief", "iqiff", "ssadaf"};
-    char*** rainbowTable = (char ***) createRainbowTable(tab, 5, 10);
-    
-         int i = 0;
-         for (i = 0; i < 10; i++){
-             printf("tab[%d][1]=%s\n", i, rainbowTable[i][0]);
-         }
-
-         swap(&rainbowTable[0][0], &rainbowTable[2][0]);
-         swap(&rainbowTable[0][1], &rainbowTable[2][1]);
-
-         printf("[0][0]%s:[2][0]%s\n", rainbowTable[0][0], rainbowTable[2][0]);
-         printf("[0][1]%s:[2][1]%s\n", rainbowTable[0][1], rainbowTable[5][1]);
-     */
-    /* INICJALIZACJA MPI */
-    //MPI_Init( 0, 0 );
-    //MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    //MPI_Comm_size(MPI_COMM_WORLD, &size);
+    MPI_Barrier(MPI_COMM_WORLD);
 
     /* WYSYLANIE DANYCH O POCZATKACH LANUCHOW */
-    //if (rank == 0) {
-    //TODO zczytanie argumentow uruchomienia
-    //TODO wyslanie danych przez rodzica
-    //} else {
-    //TODO zczytanie danych przez potomkow
-    //}
+    if (rank == 0) {
+    	//TODO zczytanie argumentow uruchomienia
+
+    	printf("pass %d\n",passCount);
+    	/* obliczenie wielkosci czesci tablicy przydzielanych dla kazdego procesu */
+    	workSize = passCount / size;
+    	workRestSize = passCount % size;
+
+    	for (dest = 1; dest < size; dest++) {
+    		MPI_Send(&workSize,1,MPI_INT,dest,TAG,MPI_COMM_WORLD);//wyslanie wiadomosci o ilosci przydzielonych hasel
+    	}
+
+    	//TODO wyslanie danych przez rodzica
+    } else {
+    	//TODO zczytanie danych przez potomkow
+    	MPI_Recv(&workSize,1,MPI_INT,0,TAG,MPI_COMM_WORLD,&status);//odebranie wiadomosci o ilosci przydzielonych hasel
+    }
 
     /* GENEROWANIE LANCUCHOW */
-    //TODO generowanie we wszystkich procesach
+    	//TODO generowanie we wszystkich procesach
+
+    printf("%d %d\n",workSize,rank);
 
     /* ODEBRANIE PUNKTOW KONCOWYCH LANCUCHOW */
-    //if (rank == 0) {
-    //TODO zczytanie koncow lancuchow przez rodzica
-    //TODO zapis do pliku
-    //}
+   // if (rank == 0) {
+    	//TODO zczytanie koncow lancuchow przez rodzica
+    	//TODO zapis do pliku
+   // }
 
     /* ZAKONCZENIE MPI*/
-    //MPI_Finalize();
+    MPI_Finalize();
     return 0;
 }
+

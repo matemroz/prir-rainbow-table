@@ -32,11 +32,13 @@ char** readPassFile(char* filename, int maxCharacters) {
    	 line[strlen(line)-1] = 0;
    	 printf("Zczytano haslo: %s\n",line);
    	 /* Obsluga przepelnienia tablicy */
-   	 if(passCount >= DEFAULT_PASS_NUM*(passCount/DEFAULT_PASS_NUM + 1)) {
+   	 if(passCount+1 >= DEFAULT_PASS_NUM*(passCount/DEFAULT_PASS_NUM + 1)) {
    		 //TODO realloc
    	 }
    	 strcpy(tab[passCount++],line);
     }
+
+    tab[passCount] = 0;//ostatnia komorka zakonczona nullem, aby w main mozna bylo zliczyc hasla
 
     fclose(fp);
 
