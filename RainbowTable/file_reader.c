@@ -1,12 +1,23 @@
 /*file_reader.c*/
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int readPassFile(char* filename, int maxCharacters) {
+#define DEFAULT_PASS_NUM 1024
+
+char** readPassFile(char* filename, int maxCharacters) {
     FILE *fp;
-    int i = 0;
+    int i;
+    int passCount = 0;
     char line[maxCharacters+1];
     
+    char **tab;
+
+    tab = (char **)malloc(DEFAULT_PASS_NUM*sizeof(char *));
+    for (i = 0; i < DEFAULT_PASS_NUM; i++){
+    	tab[i] = (char *)malloc((maxCharacters+1)*sizeof(char));
+    }
+
     if (filename == NULL) {
    	 return 0;
     }
@@ -18,10 +29,16 @@ int readPassFile(char* filename, int maxCharacters) {
 
     while ( feof(fp) == 0 ) {
    	 fgets(line,sizeof(line),fp);
+   	 line[strlen(line)-1] = 0;
    	 printf("Zczytano haslo: %s\n",line);
-   	 //TODO zapisanie hasla do tablicy
+   	 /* Obsluga przepelnienia tablicy */
+   	 if(passCount >= DEFAULT_PASS_NUM*(passCount/DEFAULT_PASS_NUM + 1)) {
+   		 //TODO realloc
+   	 }
+   	 strcpy(tab[passCount++],line);
     }
 
     fclose(fp);
-    return 1;
+
+    return tab;
 }
