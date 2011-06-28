@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
 
     	free(msgStream);
     	}
-    	//TODO wyslanie danych przez rodzica
+
     } else {
     	//TODO zczytanie danych przez potomkow
     	MPI_Recv(&workSize,1,MPI_INT,0,TAG,MPI_COMM_WORLD,&status);//odebranie wiadomosci o ilosci przydzielonych hasel
@@ -102,23 +102,27 @@ int main(int argc, char *argv[]) {
     	msgStream = (char *)malloc(workSize*(passSize+1)*sizeof(char));
 
     	MPI_Recv(msgStream,workSize*(passSize+1),MPI_CHAR,0,TAG,MPI_COMM_WORLD,&status);//odebranie lancucha z polaczonymi haslami
-    	printf("Odebrano lancuch[rozmiar: %d]:\n%s\n",strlen(msgStream),msgStream);
+    	//printf("Odebrano lancuch[rozmiar: %d]:\n%s\n",strlen(msgStream),msgStream);
 
     	passTab = (char **)malloc(workSize*sizeof(char *));
     	for (i = 0; i < workSize; i++){
     		passTab[i] = (char *)malloc(passSize*sizeof(char));
     	}
 
+    	/* Rozdzielenie otrzymanego lancucha na wyrazy i skopiowanie ich do tablicy passTab*/
     	char *recvPass = strtok(msgStream,"\n");
+    	i = 0;
     	while (recvPass != NULL) {
-    		//strcpy(passTab[i],recvPass);//TUTAJ JEST COS KURWA NIE TAK!!
+    		strcpy(passTab[i],recvPass);
     		recvPass = strtok(NULL,"\n");
+    		i++;
     	}
 
+    	/*
     	for (i = 0; i < workSize; i++){
-    		printf("Otrzymana tablica[%d]:%s\n",i,passTab[i]);
+    		printf("Otrzymana tablica[%d] w procesie %d:%s\n",i,rank,passTab[i]);
     	}
-
+		*/
     }
 
     /* GENEROWANIE LANCUCHOW */
