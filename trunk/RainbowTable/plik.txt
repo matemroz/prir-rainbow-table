@@ -1,0 +1,319 @@
+lancuch[0]:
+rainbowtab[0][0]=wordstab[0]
+rainbowtab1[0][1]=ABcX6n/XofNGc
+rainbowtab3[0][2]=1Oj4bgFs1c
+rainbowtab2[0][3]=ABJ8BrhRLzelc
+rainbowtab3[0][4]=1pf5FiO0MY
+rainbowtab2[0][5]=AB.aG3sPrxmX.
+lancuch[1]:
+rainbowtab[1][0]=wordstab[1]
+rainbowtab1[1][1]=ABlWo40d4hhb6
+rainbowtab3[1][2]=blJHnMwgIy
+rainbowtab2[1][3]=ABqknyb35.Nu6
+rainbowtab3[1][4]=e0Sk0nv97f
+rainbowtab2[1][5]=ABVJ2OA1Y6MZg
+lancuch[2]:
+rainbowtab[2][0]=wordstab[2]
+rainbowtab1[2][1]=ABtALVPR3my92
+rainbowtab3[2][2]=FkDe3IzgVG
+rainbowtab2[2][3]=ABNnwt3AzDNCY
+rainbowtab3[2][4]=TupSX8TWP6
+rainbowtab2[2][5]=ABcNYNEPbul6k
+lancuch[3]:
+rainbowtab[3][0]=wordstab[3]
+rainbowtab1[3][1]=AB4SoCzFxX0Wo
+rainbowtab3[3][2]=h8f2FqhkzI
+rainbowtab2[3][3]=AB1eQ3nEr55cE
+rainbowtab3[3][4]=UZuv6zcFEL
+rainbowtab2[3][5]=ABHu7NekyaWJo
+lancuch[4]:
+rainbowtab[4][0]=wordstab[4]
+rainbowtab1[4][1]=ABKtOzgJLh9WQ
+rainbowtab3[4][2]=J5pXDWuAAC
+rainbowtab2[4][3]=ABaF..CxxGSs2
+rainbowtab3[4][4]=Fc5WXmjuZC
+rainbowtab2[4][5]=ABtTFd/XH3i1k
+lancuch[5]:
+rainbowtab[5][0]=wordstab[5]
+rainbowtab1[5][1]=ABJylxf0azXOQ
+rainbowtab3[5][2]=oYImCLd5fB
+rainbowtab2[5][3]=ABKMhNzDAbqP6
+rainbowtab3[5][4]=jLR9rEe6my
+rainbowtab2[5][5]=ABHxg1CANPrW2
+lancuch[6]:
+rainbowtab[6][0]=wordstab[6]
+rainbowtab1[6][1]=ABCihVacMoZI2
+rainbowtab3[6][2]=OvMpSf0xiZ
+rainbowtab2[6][3]=ABU7pU6r.SALo
+rainbowtab3[6][4]=uKImmZVFr3
+rainbowtab2[6][5]=ABIpc4Ajvf0JI
+lancuch[7]:
+rainbowtab[7][0]=wordstab[7]
+rainbowtab1[7][1]=ABRKde.x8rCIk
+rainbowtab3[7][2]=CRcnuTsRuT
+rainbowtab2[7][3]=ABt4S92stxRCk
+rainbowtab3[7][4]=gjSZqTAp8V
+rainbowtab2[7][5]=ABGoLYgwpO/2A
+lancuch[8]:
+rainbowtab[8][0]=wordstab[8]
+rainbowtab1[8][1]=ABuezp4NpihjQ
+rainbowtab3[8][2]=xfhjxwUEcG
+rainbowtab2[8][3]=ABTmvoJPpet/6
+rainbowtab3[8][4]=Hdv5j0mCiq
+rainbowtab2[8][5]=AB8tqjUrzTG.E
+lancuch[9]:
+rainbowtab[9][0]=wordstab[9]
+rainbowtab1[9][1]=AB.P7dU7f.F46
+rainbowtab3[9][2]=Dwv4TovURY
+rainbowtab2[9][3]=ABQC5FXfoudLg
+rainbowtab3[9][4]=CAWwS91ZBD
+rainbowtab2[9][5]=ABnbTzCFpEj/s
+lancuch[10]:
+rainbowtab[10][0]=wordstab[10]
+rainbowtab1[10][1]=ABCihVacMoZI2
+rainbowtab3[10][2]=OvMpSf0xiZ
+rainbowtab2[10][3]=ABU7pU6r.SALo
+rainbowtab3[10][4]=uKImmZVFr3
+rainbowtab2[10][5]=ABIpc4Ajvf0JI
+lancuch[11]:
+rainbowtab[11][0]=wordstab[11]
+rainbowtab1[11][1]=ABRKde.x8rCIk
+rainbowtab3[11][2]=CRcnuTsRuT
+rainbowtab2[11][3]=ABt4S92stxRCk
+rainbowtab3[11][4]=gjSZqTAp8V
+rainbowtab2[11][5]=ABGoLYgwpO/2A
+lancuch[12]:
+rainbowtab[12][0]=wordstab[12]
+rainbowtab1[12][1]=ABuezp4NpihjQ
+rainbowtab3[12][2]=xfhjxwUEcG
+rainbowtab2[12][3]=ABTmvoJPpet/6
+rainbowtab3[12][4]=Hdv5j0mCiq
+rainbowtab2[12][5]=AB8tqjUrzTG.E
+lancuch[13]:
+rainbowtab[13][0]=wordstab[13]
+rainbowtab1[13][1]=AB.P7dU7f.F46
+rainbowtab3[13][2]=Dwv4TovURY
+rainbowtab2[13][3]=ABQC5FXfoudLg
+rainbowtab3[13][4]=CAWwS91ZBD
+rainbowtab2[13][5]=ABnbTzCFpEj/s
+lancuch[14]:
+rainbowtab[14][0]=wordstab[14]
+rainbowtab1[14][1]=ABcX6n/XofNGc
+rainbowtab3[14][2]=1Oj4bgFs1c
+rainbowtab2[14][3]=ABJ8BrhRLzelc
+rainbowtab3[14][4]=1pf5FiO0MY
+rainbowtab2[14][5]=AB.aG3sPrxmX.
+lancuch[15]:
+rainbowtab[15][0]=wordstab[15]
+rainbowtab1[15][1]=ABlWo40d4hhb6
+rainbowtab3[15][2]=blJHnMwgIy
+rainbowtab2[15][3]=ABqknyb35.Nu6
+rainbowtab3[15][4]=e0Sk0nv97f
+rainbowtab2[15][5]=ABVJ2OA1Y6MZg
+lancuch[16]:
+rainbowtab[16][0]=wordstab[16]
+rainbowtab1[16][1]=ABtALVPR3my92
+rainbowtab3[16][2]=FkDe3IzgVG
+rainbowtab2[16][3]=ABNnwt3AzDNCY
+rainbowtab3[16][4]=TupSX8TWP6
+rainbowtab2[16][5]=ABcNYNEPbul6k
+lancuch[17]:
+rainbowtab[17][0]=wordstab[17]
+rainbowtab1[17][1]=AB4SoCzFxX0Wo
+rainbowtab3[17][2]=h8f2FqhkzI
+rainbowtab2[17][3]=AB1eQ3nEr55cE
+rainbowtab3[17][4]=UZuv6zcFEL
+rainbowtab2[17][5]=ABHu7NekyaWJo
+lancuch[18]:
+rainbowtab[18][0]=wordstab[18]
+rainbowtab1[18][1]=ABKtOzgJLh9WQ
+rainbowtab3[18][2]=J5pXDWuAAC
+rainbowtab2[18][3]=ABaF..CxxGSs2
+rainbowtab3[18][4]=Fc5WXmjuZC
+rainbowtab2[18][5]=ABtTFd/XH3i1k
+lancuch[19]:
+rainbowtab[19][0]=wordstab[19]
+rainbowtab1[19][1]=ABJylxf0azXOQ
+rainbowtab3[19][2]=oYImCLd5fB
+rainbowtab2[19][3]=ABKMhNzDAbqP6
+rainbowtab3[19][4]=jLR9rEe6my
+rainbowtab2[19][5]=ABHxg1CANPrW2
+lancuch[20]:
+rainbowtab[20][0]=wordstab[20]
+rainbowtab1[20][1]=ABCihVacMoZI2
+rainbowtab3[20][2]=OvMpSf0xiZ
+rainbowtab2[20][3]=ABU7pU6r.SALo
+rainbowtab3[20][4]=uKImmZVFr3
+rainbowtab2[20][5]=ABIpc4Ajvf0JI
+lancuch[21]:
+rainbowtab[21][0]=wordstab[21]
+rainbowtab1[21][1]=ABRKde.x8rCIk
+rainbowtab3[21][2]=CRcnuTsRuT
+rainbowtab2[21][3]=ABt4S92stxRCk
+rainbowtab3[21][4]=gjSZqTAp8V
+rainbowtab2[21][5]=ABGoLYgwpO/2A
+lancuch[22]:
+rainbowtab[22][0]=wordstab[22]
+rainbowtab1[22][1]=ABuezp4NpihjQ
+rainbowtab3[22][2]=xfhjxwUEcG
+rainbowtab2[22][3]=ABTmvoJPpet/6
+rainbowtab3[22][4]=Hdv5j0mCiq
+rainbowtab2[22][5]=AB8tqjUrzTG.E
+lancuch[23]:
+rainbowtab[23][0]=wordstab[23]
+rainbowtab1[23][1]=AB.P7dU7f.F46
+rainbowtab3[23][2]=Dwv4TovURY
+rainbowtab2[23][3]=ABQC5FXfoudLg
+rainbowtab3[23][4]=CAWwS91ZBD
+rainbowtab2[23][5]=ABnbTzCFpEj/s
+lancuch[24]:
+rainbowtab[24][0]=wordstab[24]
+rainbowtab1[24][1]=ABCihVacMoZI2
+rainbowtab3[24][2]=OvMpSf0xiZ
+rainbowtab2[24][3]=ABU7pU6r.SALo
+rainbowtab3[24][4]=uKImmZVFr3
+rainbowtab2[24][5]=ABIpc4Ajvf0JI
+lancuch[25]:
+rainbowtab[25][0]=wordstab[25]
+rainbowtab1[25][1]=ABRKde.x8rCIk
+rainbowtab3[25][2]=CRcnuTsRuT
+rainbowtab2[25][3]=ABt4S92stxRCk
+rainbowtab3[25][4]=gjSZqTAp8V
+rainbowtab2[25][5]=ABGoLYgwpO/2A
+lancuch[26]:
+rainbowtab[26][0]=wordstab[26]
+rainbowtab1[26][1]=ABuezp4NpihjQ
+rainbowtab3[26][2]=xfhjxwUEcG
+rainbowtab2[26][3]=ABTmvoJPpet/6
+rainbowtab3[26][4]=Hdv5j0mCiq
+rainbowtab2[26][5]=AB8tqjUrzTG.E
+lancuch[27]:
+rainbowtab[27][0]=wordstab[27]
+rainbowtab1[27][1]=AB.P7dU7f.F46
+rainbowtab3[27][2]=Dwv4TovURY
+rainbowtab2[27][3]=ABQC5FXfoudLg
+rainbowtab3[27][4]=CAWwS91ZBD
+rainbowtab2[27][5]=ABnbTzCFpEj/s
+tab[0]: AB.aG3sPrxmX.
+tab[1]: AB.aG3sPrxmX.
+tab[2]: AB8tqjUrzTG.E
+tab[3]: AB8tqjUrzTG.E
+tab[4]: AB8tqjUrzTG.E
+tab[5]: AB8tqjUrzTG.E
+tab[6]: ABGoLYgwpO/2A
+tab[7]: ABGoLYgwpO/2A
+tab[8]: ABGoLYgwpO/2A
+tab[9]: ABGoLYgwpO/2A
+tab[10]: ABHu7NekyaWJo
+tab[11]: ABHu7NekyaWJo
+tab[12]: ABHxg1CANPrW2
+tab[13]: ABHxg1CANPrW2
+tab[14]: ABIpc4Ajvf0JI
+tab[15]: ABIpc4Ajvf0JI
+tab[16]: ABIpc4Ajvf0JI
+tab[17]: ABIpc4Ajvf0JI
+tab[18]: ABVJ2OA1Y6MZg
+tab[19]: ABVJ2OA1Y6MZg
+tab[20]: ABcNYNEPbul6k
+tab[21]: ABcNYNEPbul6k
+tab[22]: ABnbTzCFpEj/s
+tab[23]: ABnbTzCFpEj/s
+tab[24]: ABnbTzCFpEj/s
+tab[25]: ABnbTzCFpEj/s
+tab[26]: ABtTFd/XH3i1k
+tab[27]: ABtTFd/XH3i1k
+AB.aG3sPrxmX.
+[wynik sortowania:0-1] AB.aG3sPrxmX. <-> AB.aG3sPrxmX. = 0
+AB.aG3sPrxmX.
+[wynik sortowania:1-2] AB.aG3sPrxmX. <-> AB8tqjUrzTG.E = -1
+AB8tqjUrzTG.E
+[wynik sortowania:2-3] AB8tqjUrzTG.E <-> AB8tqjUrzTG.E = 0
+AB8tqjUrzTG.E
+[wynik sortowania:3-4] AB8tqjUrzTG.E <-> AB8tqjUrzTG.E = 0
+AB8tqjUrzTG.E
+[wynik sortowania:4-5] AB8tqjUrzTG.E <-> AB8tqjUrzTG.E = 0
+AB8tqjUrzTG.E
+[wynik sortowania:5-6] AB8tqjUrzTG.E <-> ABGoLYgwpO/2A = -1
+ABGoLYgwpO/2A
+[wynik sortowania:6-7] ABGoLYgwpO/2A <-> ABGoLYgwpO/2A = 0
+ABGoLYgwpO/2A
+[wynik sortowania:7-8] ABGoLYgwpO/2A <-> ABGoLYgwpO/2A = 0
+ABGoLYgwpO/2A
+[wynik sortowania:8-9] ABGoLYgwpO/2A <-> ABGoLYgwpO/2A = 0
+ABGoLYgwpO/2A
+[wynik sortowania:9-10] ABGoLYgwpO/2A <-> ABHu7NekyaWJo = -1
+ABHu7NekyaWJo
+[wynik sortowania:10-11] ABHu7NekyaWJo <-> ABHu7NekyaWJo = 0
+ABHu7NekyaWJo
+[wynik sortowania:11-12] ABHu7NekyaWJo <-> ABHxg1CANPrW2 = -1
+ABHxg1CANPrW2
+[wynik sortowania:12-13] ABHxg1CANPrW2 <-> ABHxg1CANPrW2 = 0
+ABHxg1CANPrW2
+[wynik sortowania:13-14] ABHxg1CANPrW2 <-> ABIpc4Ajvf0JI = -1
+ABIpc4Ajvf0JI
+[wynik sortowania:14-15] ABIpc4Ajvf0JI <-> ABIpc4Ajvf0JI = 0
+ABIpc4Ajvf0JI
+[wynik sortowania:15-16] ABIpc4Ajvf0JI <-> ABIpc4Ajvf0JI = 0
+ABIpc4Ajvf0JI
+[wynik sortowania:16-17] ABIpc4Ajvf0JI <-> ABIpc4Ajvf0JI = 0
+ABIpc4Ajvf0JI
+[wynik sortowania:17-18] ABIpc4Ajvf0JI <-> ABVJ2OA1Y6MZg = -1
+ABVJ2OA1Y6MZg
+[wynik sortowania:18-19] ABVJ2OA1Y6MZg <-> ABVJ2OA1Y6MZg = 0
+ABVJ2OA1Y6MZg
+[wynik sortowania:19-20] ABVJ2OA1Y6MZg <-> ABcNYNEPbul6k = -1
+ABcNYNEPbul6k
+[wynik sortowania:20-21] ABcNYNEPbul6k <-> ABcNYNEPbul6k = 0
+ABcNYNEPbul6k
+[wynik sortowania:21-22] ABcNYNEPbul6k <-> ABnbTzCFpEj/s = -1
+ABnbTzCFpEj/s
+[wynik sortowania:22-23] ABnbTzCFpEj/s <-> ABnbTzCFpEj/s = 0
+ABnbTzCFpEj/s
+[wynik sortowania:23-24] ABnbTzCFpEj/s <-> ABnbTzCFpEj/s = 0
+ABnbTzCFpEj/s
+[wynik sortowania:24-25] ABnbTzCFpEj/s <-> ABnbTzCFpEj/s = 0
+ABnbTzCFpEj/s
+[wynik sortowania:25-26] ABnbTzCFpEj/s <-> ABtTFd/XH3i1k = -1
+ABtTFd/XH3i1k
+[wynik sortowania:26-27] ABtTFd/XH3i1k <-> ABtTFd/XH3i1k = 0
+ABtTFd/XH3i1k
+Do funkcji crackPassword przekazano nastepujaca tablice:
+asdas -> AB.aG3sPrxmX.
+asdas -> AB.aG3sPrxmX.
+iqiff -> AB8tqjUrzTG.E
+iqiff -> AB8tqjUrzTG.E
+iqiff -> AB8tqjUrzTG.E
+iqiff -> AB8tqjUrzTG.E
+ieqief -> ABGoLYgwpO/2A
+ieqief -> ABGoLYgwpO/2A
+ieqief -> ABGoLYgwpO/2A
+ieqief -> ABGoLYgwpO/2A
+wijff -> ABHu7NekyaWJo
+wijff -> ABHu7NekyaWJo
+oqijff -> ABHxg1CANPrW2
+oqijff -> ABHxg1CANPrW2
+yeyjff -> ABIpc4Ajvf0JI
+yeyjff -> ABIpc4Ajvf0JI
+yeyjff -> ABIpc4Ajvf0JI
+yeyjff -> ABIpc4Ajvf0JI
+fjgja -> ABVJ2OA1Y6MZg
+fjgja -> ABVJ2OA1Y6MZg
+xijff -> ABcNYNEPbul6k
+xijff -> ABcNYNEPbul6k
+ssadaf -> ABnbTzCFpEj/s
+ssadaf -> ABnbTzCFpEj/s
+ssadaf -> ABnbTzCFpEj/s
+ssadaf -> ABnbTzCFpEj/s
+eijff -> ABtTFd/XH3i1k
+eijff -> ABtTFd/XH3i1k
+---
+Porownuje: ABHxg1CANPrW2 ? ABIpc4Ajvf0JI = -1
+Porownuje: ABcNYNEPbul6k ? ABIpc4Ajvf0JI = 1
+Znaleziono hash: ABIpc4Ajvf0JI w 16 wierszu
+Szukany hash: ABIpc4Ajvf0JI
+[Wyszukiwanie w lancuchu:] yeyjff -> ABCihVacMoZI2 
+[Wyszukiwanie w lancuchu:] ³*Å -> ABHRQlPxmczPk 
+[Wyszukiwanie w lancuchu:] ³*Å -> ABFpdCWCZpc8E 
+[Wyszukiwanie w lancuchu:] ³*Å -> ABYf3p4vwSy96 
+[Wyszukiwanie w lancuchu:] ³*Å -> ABYWm.fmaC6kY 
+Nastapil blad podczas odzyskiwania hasla z lancucha!
