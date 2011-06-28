@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include "rainbow.h"
+#include "formatter.h"
 
 /*
  * Funkcja haszująca. Zwraca wygenerowany hasz na podstawie podanego
@@ -26,22 +27,6 @@ char *hash(char *password) {
     password = strdup(crypt(password, salt));
 
     return password;
-}
-
-int str_to_int(char *str, int n) {
-    int str_int;
-    int i;
-
-    str_int = 0;
-    i = 0;
-
-    for (i = 0; i < n; i++) {
-
-        char c = *(str + i);
-        str_int += (int) c;
-    }
-
-    return str_int;
 }
 
 char *reduce(char *hash, int deep, int passw_size, int passw_type) {
@@ -91,12 +76,11 @@ char *reduce(char *hash, int deep, int passw_size, int passw_type) {
             charset = (char *) num;
             chars_size = sizeof (num);
             break;
-            
+
         case 7:
             charset = (char *) ext_alphanum;
             chars_size = sizeof (ext_alphanum);
             break;
-
 
         default:
             break;
@@ -119,56 +103,19 @@ char *reduce(char *hash, int deep, int passw_size, int passw_type) {
     reduce_tab[1] = hash_int[1] ^ deep;
 
     for (i = 0; i < passw_size / 2; i++) {
-        red_hash[i] = charset[(reduce_tab[0] ^ (i ^ (str_to_int(hash, DES_CHARS_NUM) * (i + 1))))  % chars_size];
+        int index = (reduce_tab[0] ^ ((i * i) ^ (str_to_int(hash, DES_CHARS_NUM) * (i + 1)))) % chars_size;
+        red_hash[i] = charset[index];
     }
 
     for (i = passw_size / 2; i < passw_size; i++) {
-        red_hash[i] = charset[(reduce_tab[1] ^ (i ^ (str_to_int(hash, DES_CHARS_NUM) * (i + 1))))  % chars_size];
+        int index = (reduce_tab[1] ^ ((i * i) ^ (str_to_int(hash, DES_CHARS_NUM) * (i + 1)))) % chars_size;
+        red_hash[i] = charset[index];
     }
 
     red_hash[passw_size] = '\0';
 
     return red_hash;
 }
-
-/*
- * Funkcja redukująca. Zwraca łańcuch po przeprowadzeniu redukcji. Należy podać głębokość
- * tablicy tęczowej.
- *
- * min_length
- * max_length
- * charset: num, alpha, alphanum
- */
-/*char *reduce(char *hash, int deep, int charset_size) {
-    char *red_hash;
-    int red = 5;
-    int i, j;
-
-    if ((strcmp(hash, "") == 0) || (strlen(hash) < red + 1)) {
-        fprintf(stderr, "Nie podano hasza, ktory ma byc poddany redukcji lub jest zbyt krótki!");
-        return "";
-    }
-
-    i = 0;
-    j = 0;
-
-    red_hash = (char *) malloc(strlen(hash) * sizeof (char));
-
-    if (red_hash == NULL) {
-        fprintf(stderr, "Nie mozna przydzielic pamieci 01");
-        return NULL;
-    }
-
-    while (*(hash + i) != '\0') {
-        if ((i >= red) && (*(hash + i) != '.') && (*(hash + i) != '/')) {
- *(red_hash + j++) = *(hash + i);
-        }
-        i++;
-    }
-
-    return red_hash;
-}
- */
 
 /*
  * Funkcja zwracająca dwuwymiarową tablicę tęczową, o danej głębokości i rozmiarze. Jako
@@ -203,13 +150,13 @@ char*** createRainbowTable(char **wordstab, int deep, int n, int passw_size, int
             }
 
             if (i > 0 && i % 2 == 0) {
-                h = (char *) hash(r);
+                h =  (char *) hash(r);
                 printf("rainbowtab2[%d][%d]=%s\n", j, i + 1, h);
             }
 
 
             if (i % 2 != 0) {
-                r = (char *) reduce(h, deep, passw_size, passw_type);
+                r = strdup((char *) reduce(h, deep, passw_size, passw_type));
                 printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
             }
 
@@ -221,7 +168,6 @@ char*** createRainbowTable(char **wordstab, int deep, int n, int passw_size, int
         rainbowtab[j][0] = *(wordstab + j);
     }
 
-    
     quicksort(rainbowtab, 0, n - 1);
     for (i = 0; i < n; i++) {
         printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
