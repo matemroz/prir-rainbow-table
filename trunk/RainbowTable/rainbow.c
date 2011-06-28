@@ -174,7 +174,7 @@ char *reduce(char *hash, int deep, int passw_size, int passw_type) {
  * Funkcja zwracająca dwuwymiarową tablicę tęczową, o danej głębokości i rozmiarze. Jako
  * argument otrzymuje również listę wyrazów, z których będą generowane ciągi.
  */
-char*** createRainbowTable(char **wordstab, int deep, int n) {
+char*** createRainbowTable(char **wordstab, int deep, int n, int passw_size, int passw_type) {
     int i;
     int j;
     char *h;
@@ -191,7 +191,6 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
         return NULL;
     }
 
-    char *tmp;
     for (j = 0; j < n; j++) {
         printf("lancuch[%d]:\n", j);
 
@@ -210,7 +209,7 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
 
 
             if (i % 2 != 0) {
-                r = (char *) reduce(h, 0, 0, 0);
+                r = (char *) reduce(h, deep, passw_size, passw_type);
                 printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
             }
 
@@ -222,7 +221,8 @@ char*** createRainbowTable(char **wordstab, int deep, int n) {
         rainbowtab[j][0] = *(wordstab + j);
     }
 
-    quicksort(rainbowtab, 0, 14);
+    
+    quicksort(rainbowtab, 0, n - 1);
     for (i = 0; i < n; i++) {
         printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
     }

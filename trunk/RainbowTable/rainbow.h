@@ -16,4 +16,4 @@ char *hash(char *);
 
 char *reduce(char *, int, int, int);
 
-//char ***createRainbowTable(char *wordstab[], int, int);
+char ***createRainbowTable(char *wordstab[], int, int, int, int);
