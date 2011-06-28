@@ -1,8 +1,14 @@
 = TODO =
 ----
 
-  # wyslanie hasel do procesow w MPI (main.c)
-  # generowanie i sortowanie w kazdym procesie (main.c)
-  # zczytanie i posortowanie wygenerowanych lancuchow przez ojca (main.c)
-  # poprawa uzycia redukcji w lamaniu hasla (rainbow_cracker.c)
-  # zapis tablicy teczowej do pliku
+  #  wyslanie hasel do procesow w MPI (main.c)
+  #  generowanie i sortowanie w kazdym procesie (main.c)
+  #  zczytanie i posortowanie wygenerowanych lancuchow przez ojca (main.c)
+  #  poprawa uzycia redukcji w lamaniu hasla (rainbow_cracker.c)
+  #  zapis tablicy teczowej do pliku
+  #  zwiększenie poziomu bezkolizyjności do poziomu zadowalającego;)
+  #  napisanie testów wydajnościowych dla programu: 
+  *  jaki czas generowania dla różnej liczby procesów? 
+  *  jaki czas łamania hasła dla różnej liczby procesów? 
+  *  sprawdzić działanie programu z różnymi parametrami funkcji redukcji.
+  #  napisanie sprawozdania
