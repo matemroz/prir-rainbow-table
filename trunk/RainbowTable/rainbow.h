@@ -9,6 +9,7 @@ static const char smallalphanum[36] = "0123456789abcdefghijklmnopqrstuvwxyz";
 static const char alpha[52] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 static const char smallalpha[26] = "abcdefghijklmnopqrstuvwxyz";
 static const char bigalpha[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static const char ext_alphanum[95] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 static const char num[10] = "0123456789";
 
 char *hash(char *);

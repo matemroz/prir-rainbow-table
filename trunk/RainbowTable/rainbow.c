@@ -91,6 +91,12 @@ char *reduce(char *hash, int deep, int passw_size, int passw_type) {
             charset = (char *) num;
             chars_size = sizeof (num);
             break;
+            
+        case 7:
+            charset = (char *) ext_alphanum;
+            chars_size = sizeof (ext_alphanum);
+            break;
+
 
         default:
             break;
@@ -110,18 +116,17 @@ char *reduce(char *hash, int deep, int passw_size, int passw_type) {
     hash_int[1] = str_to_int(hash_right_half, DES_CHARS_NUM / 2);
 
     reduce_tab[0] = hash_int[0] ^ deep;
-    reduce_tab[1] = hash_int[1] & deep;
+    reduce_tab[1] = hash_int[1] ^ deep;
 
     for (i = 0; i < passw_size / 2; i++) {
-        red_hash[i] = charset[(reduce_tab[0] * i) % chars_size];
+        red_hash[i] = charset[(reduce_tab[0] ^ (i ^ (str_to_int(hash, DES_CHARS_NUM) * (i + 1))))  % chars_size];
     }
 
     for (i = passw_size / 2; i < passw_size; i++) {
-        red_hash[i] = charset[(reduce_tab[1] * i) % chars_size];
+        red_hash[i] = charset[(reduce_tab[1] ^ (i ^ (str_to_int(hash, DES_CHARS_NUM) * (i + 1))))  % chars_size];
     }
 
     red_hash[passw_size] = '\0';
-    printf("redd_hash: %s\n", red_hash);
 
     return red_hash;
 }
