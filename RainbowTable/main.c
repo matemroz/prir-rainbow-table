@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
     int depth = 5; /* glebokosc lancucha teczowego */
     int passSize = 10; /* dlugosc hasla */
     int passType = 0; /*zbior znakow*/
+    int hashSize = 13;
     char *hash_rt;
     char **passTab;
     char ***rainbowTab;
@@ -28,8 +29,10 @@ int main(int argc, char *argv[]) {
     int dest;
     int src = 0;
     int i = 0;
-    char * msgStream;
+    char *msgStream;
+    char **msgTab;
     char *filename_rt;
+    char ***finalRainbowTab;
 
     /*Generowanie tablicy teczowej*/
     if (argc > 1 && strcmp(argv[1], "-gen") == 0) {
@@ -204,13 +207,76 @@ int main(int argc, char *argv[]) {
 
     MPI_Barrier(MPI_COMM_WORLD);
 
-    //printf("%d %d\n",workSize,rank);
+    /* WYSLANIE I ODEBRANIE KONCOWYCH LANCUCHOW */
 
-    /* ODEBRANIE PUNKTOW KONCOWYCH LANCUCHOW */
-    //if (rank == 0) {
-    	//TODO zczytanie koncow lancuchow przez rodzica
-    	//TODO zapis do pliku
-    //}
+    if (rank != 0) {
+    	msgStream = NULL;
+    	char *msgStream = (char *)malloc(workSize*(passSize+1 + hashSize+1));
+    	i = 0;
+    	/* Budowania lancucha do wyslania, gdzie znacznik miedzy wyrazami to '\n' */
+    	strcpy(msgStream,"");
+    	while (i < workSize) {
+    		strcat(msgStream,rainbowTab[i][0]);
+    		strcat(msgStream,"\n");
+    		strcat(msgStream,rainbowTab[i][1]);
+    		strcat(msgStream,"\n");
+    		i++;
+    	}
+
+    	MPI_Send(msgStream,strlen(msgStream)+1,MPI_CHAR,0,TAG,MPI_COMM_WORLD);
+    	printf("Wyslano lancuch koncowy z proc %d: %s/n",rank,msgStream);
+    	free(msgStream);
+    } else {
+    	msgTab = (char **)malloc((size-1)*sizeof(char *));
+    	for (src = 1; src < size; src++) {
+    		msgTab[src-1] = malloc(workSize*(passSize+1 + hashSize+1)*sizeof(char));
+    		MPI_Recv(msgTab[src-1],workSize*(passSize+1 + hashSize+1),MPI_CHAR,src,TAG,MPI_COMM_WORLD,&status);
+    		printf("Odebrano lancuch koncowy z %d: %s\n",src, msgTab[src-1]);
+    	}
+    }
+
+    /* POLACZANIE ODEBRANYCH LANCUCHOW */
+
+    if (rank == 0){
+    	/* Alokacja pamieci na ostateczna wersje tablicy teczowej */
+    	finalRainbowTab = (char ***)malloc(passCount*sizeof(char **));
+    	for (i = 0; i < passCount; i++){
+    		finalRainbowTab[i] = (char **)malloc(2*sizeof(char *));
+    		finalRainbowTab[i][0] = (char *)malloc((passSize+1)*sizeof(char));
+    		finalRainbowTab[i][1] = (char *)malloc((hashSize+1)*sizeof(char));
+    	}
+
+    	/* Budowanie ostatecznej tablicy z wczesniej otrzymanych strumieni wiadomosci */
+    	char *strTmp;
+    	int j = 0;
+    	for (i = 0; i < (size-1); i++){
+    		strTmp = strtok(msgTab[i],"\n");
+    		while (strTmp != NULL){
+    			strcpy(finalRainbowTab[j][0],strTmp);
+    			strTmp = strtok(NULL,"\n");
+    			strcpy(finalRainbowTab[j][1],strTmp);
+    			strTmp = strtok(NULL,"\n");
+    			j++;
+    		}
+    	}
+    	/* Dolaczenie do tablicy reszty lancuchow z procesu glownego */
+    	i = 0;
+    	while(j < passCount) {//TODO czy nie trzeba i < workSize+workRestSize ?
+    		strcpy(finalRainbowTab[j][0],rainbowTab[i][0]);
+    		strcpy(finalRainbowTab[j][1],rainbowTab[i][1]);
+    		j++;
+    		i++;
+    	}
+
+    	/* Posortowanie i wypisanie tablicy */
+    	quicksort(finalRainbowTab,0,passCount-1);
+    	printf("|---> WYGENEROWANA TABLICA TECZOWA <---|\n");
+    	for (i = 0; i < passCount; i++){
+    		printf("%s -> %s\n",finalRainbowTab[i][0],finalRainbowTab[i][1]);
+    	}
+    	printf("----------------------------------------\n");
+
+    }
 
     /* ZAKONCZENIE MPI*/
     MPI_Finalize();
