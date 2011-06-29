@@ -85,6 +85,9 @@ int main(int argc, char *argv[]) {
 
         fprintf(stdout, "Uzycie programu:\n"
                 "rtg -u\n\n");
+
+        return 0;
+
     } else {
         fprintf(stdout, "Generowanie tablicy:\n"
                 "rtg -gen -n <liczba procesow> -p <dlugosc hasla> -t <typ znakow> -d <glebokosc> -r <nazwa pliku>\n\n");
@@ -97,6 +100,8 @@ int main(int argc, char *argv[]) {
 
         fprintf(stdout, "Uzycie programu:\n"
                 "rtg -u\n\n");
+
+        return 0;
     }
 
 
