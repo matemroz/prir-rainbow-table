@@ -7,11 +7,12 @@
 
 #define DEFAULT_PASS_NUM 1024
 
+
 char** readPassFile(char* filename, int maxCharacters) {
     FILE *fp;
     int i;
     int passCount = 0;
-    char line[maxCharacters + 1];
+    char line[64];
 
     char **tab;
 
@@ -25,19 +26,23 @@ char** readPassFile(char* filename, int maxCharacters) {
     }
 
     if ((fp = fopen(filename, "r")) == NULL) {
-        printf("Cannot open a file containing passwords!\n");
+        printf("Nie mozna otworzyc pliku z haslami!\n");
         return 0;
     }
 
-    while (feof(fp) == 0) {
+    while (feof(fp) == 0) {// && passCount < DEFAULT_PASS_NUM
         fgets(line, sizeof (line), fp);
         line[strlen(line) - 1] = 0;
-        printf("Zczytano haslo: %s\n", line);
+        //printf("Zczytano linie: %s\n", line);
         /* Obsluga przepelnienia tablicy */
         if (passCount + 1 >= DEFAULT_PASS_NUM * (passCount / DEFAULT_PASS_NUM + 1)) {
-            //TODO realloc
+            ;//TODO realloc
         }
-        strcpy(tab[passCount++], line);
+        line[maxCharacters] = 0;
+        strncpy(tab[passCount], line,maxCharacters);
+        tab[passCount][maxCharacters] = 0;
+        //printf("Zczytano haslo: %s\n", tab[passCount]);
+        passCount++;
     }
 
     tab[passCount] = 0; //ostatnia komorka zakonczona nullem, aby w main mozna bylo zliczyc hasla
