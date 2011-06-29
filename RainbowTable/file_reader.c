@@ -83,6 +83,7 @@ char ***getRTabFromFile(char *filename) {
             if (line[i] == ':') {
                 flag = 1;
                 reduce[i] = '\0';
+                i++;
             }
             if (flag == 0){
                 reduce[i] = line[i];
