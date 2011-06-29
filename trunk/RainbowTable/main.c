@@ -266,7 +266,7 @@ int main(int argc, char *argv[]) {
 
 
 
-    	crackPassword("ABZKvirWkBu4s",finalRainbowTab,passCount,depth,passSize,passType);
+    	crackPassword("AB.pF9XiT7ZVE",finalRainbowTab,passCount,depth,passSize,passType);
     }
 
 
