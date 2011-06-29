@@ -17,8 +17,19 @@ char** readPassFile(char* filename, int maxCharacters) {
     char **tab;
     n = DEFAULT_PASS_NUM;
     tab = (char **) malloc(n * sizeof (char *));
+
+    if (tab == NULL) {
+        fprintf(stderr, "Nie mozna przydzielic pamieci 11");
+        return NULL;
+    }
+
     for (i = 0; i < n; i++) {
         tab[i] = (char *) malloc((maxCharacters + 1) * sizeof (char));
+        if (tab == NULL) {
+            fprintf(stderr, "Nie mozna przydzielic pamieci 12");
+            free(tab);
+            return NULL;
+        }
     }
 
     if (filename == NULL) {
@@ -30,9 +41,8 @@ char** readPassFile(char* filename, int maxCharacters) {
         return 0;
     }
 
-    while (feof(fp) == 0) {// && passCount < DEFAULT_PASS_NUM
+    while (feof(fp) == 0) {
         if (passCount >= n) {
-
             char **tmpTab = (char **) realloc(tab, n * 2 * sizeof (char *));
 
             if (tmpTab == NULL) {
@@ -109,8 +119,6 @@ char ***getRTabFromFile(char *filename) {
     while (feof(fp) == 0) {
 
         if (counter >= n) {
-            printf("Przydzielanie pamieci: %d\n", counter);
-
             char ***tmpRainbowTab = (char ***) realloc(rainbowTab, n * 2 * sizeof (char **));
 
             if (tmpRainbowTab == NULL) {
@@ -129,7 +137,6 @@ char ***getRTabFromFile(char *filename) {
             }
 
             n = n * 2;
-
         }
 
         fgets(line, sizeof (line), fp);
@@ -155,8 +162,6 @@ char ***getRTabFromFile(char *filename) {
         j = 0;
         rainbowTab[counter][0] = reduce;
         rainbowTab[counter++][1] = hash;
-
-        printf("Wczytano dane rainbowTab[%d]: %s:%s\n", counter - 1, rainbowTab[counter - 1][0], rainbowTab[counter - 1][1]);
     }
     fclose(fp);
 
