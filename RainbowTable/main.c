@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
     		free(msgStream);
     	}
 
-    	passTab = passTab+30;
+    	passTab = passTab+workSize*(size-1);
     } else {
     	//TODO zczytanie danych przez potomkow
     	MPI_Recv(&workSize,1,MPI_INT,0,TAG,MPI_COMM_WORLD,&status);//odebranie wiadomosci o ilosci przydzielonych hasel
@@ -196,9 +196,8 @@ int main(int argc, char *argv[]) {
     /* GENEROWANIE LANCUCHOW */
 
 
-    rainbowTab = (char ***) createRainbowTable(passTab, depth, workSize, passSize, passType);
-    quicksort(rainbowTab, 0, workSize-1);
-    for (i = 0; i < workSize; i++){
+    rainbowTab = (char ***) createRainbowTable(passTab, depth, workSize+workRestSize, passSize, passType);
+    for (i = 0; i < workSize+workRestSize; i++){
     	printf("Moja [rank: %d] tablica: %s -> %s\n",rank,rainbowTab[i][0],rainbowTab[i][1]);
     }
 
