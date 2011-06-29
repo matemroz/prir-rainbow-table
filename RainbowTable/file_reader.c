@@ -30,7 +30,7 @@ char** readPassFile(char* filename, int maxCharacters) {
         return 0;
     }
 
-    while (feof(fp) == 0) {// && passCount < DEFAULT_PASS_NUM
+    while (feof(fp) == 0 && passCount < DEFAULT_PASS_NUM) {// && passCount < DEFAULT_PASS_NUM
         fgets(line, sizeof (line), fp);
         line[strlen(line) - 1] = 0;
         //printf("Zczytano linie: %s\n", line);
