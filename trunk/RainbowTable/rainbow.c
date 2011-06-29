@@ -156,7 +156,7 @@ char*** createRainbowTable(char **wordstab, int deep, int n, int passw_size, int
 
 
             if (i % 2 != 0) {
-                r = strdup((char *) reduce(h, deep, passw_size, passw_type));
+                r = (char *) reduce(h, deep, passw_size, passw_type);
                 printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
             }
 
