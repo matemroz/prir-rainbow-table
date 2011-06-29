@@ -83,14 +83,13 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize,int depth,int pa
 	while (i < depth) {
 		//hashTmp = (char *)hash(passTmp);
 		strcpy(hashTmp,(char *)hash(passTmp));
-		//printf("[Wyszukiwanie w lancuchu:] %s -> %s \n", passTmp, hashTmp);
+		printf("[Wyszukiwanie w lancuchu:] %s -> %s \n", passTmp, hashTmp);
 			if (strcmp(hashTmp,str) == 0) {
 				printf("-----------------------------\nHaslo to: %s\n-----------------------------\n",passTmp);
 				return;
 			}
 		//passTmp =(char *)reduce(hashTmp,depth,10,passw_type);
-		strcpy(passTmp,(char *)reduce(hashTmp,depth,10,passw_type));
-		//strcpy(hashTmp,"aaaaa");
+		strcpy(passTmp,(char *)reduce(hashTmp,depth,passSize,passw_type));
 		i++;
 	}
 
