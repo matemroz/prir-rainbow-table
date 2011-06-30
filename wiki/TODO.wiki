@@ -1,12 +1,10 @@
 = TODO =
 ----
 
-  #  wyslanie hasel do procesow w MPI (main.c)
-  #  generowanie i sortowanie w kazdym procesie (main.c)
-  #  zczytanie i posortowanie wygenerowanych lancuchow przez ojca (main.c)
-  #  poprawa uzycia redukcji w lamaniu hasla (rainbow_cracker.c)
-  #  napisanie testów wydajnościowych dla programu: 
-  *  jaki czas generowania dla różnej liczby procesów? 
-  *  jaki czas łamania hasła dla różnej liczby procesów? 
-  *  sprawdzić działanie programu z różnymi parametrami funkcji redukcji.
-  #  napisanie sprawozdania
+  #  Napisanie sprawozdania,
+  #  strcpy zamienić na strncpy,
+  #  wykorzystanie parametrow dla do generowania i lamania hasla,
+  #  quicksort - sprawdzić, czy lepiej usuwać z rainbow.c czy nie,
+  #  main.c, rainbow_cracker.c - nie wszystkie malloc mają free,
+  #  wyeliminować warningi z pedantic
+  
