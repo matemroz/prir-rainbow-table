@@ -94,12 +94,12 @@ char ***getRTabFromFile(char *filename) {
     char reduce[LINE_LENGTH / 2];
     char hash[LINE_LENGTH / 2];
     FILE *fp;
-    char line[LINE_LENGTH];
-    
+
     char ***rainbowTab = (char ***) malloc(n * sizeof (char **));
 
     if (rainbowTab == NULL) {
         fprintf(stderr, "Nie mozna przydzielic pamieci 03");
+        free(rainbowTab);
         return NULL;
     }
 
@@ -111,7 +111,7 @@ char ***getRTabFromFile(char *filename) {
             return NULL;
         }
     }
-
+    char line[LINE_LENGTH];
 
     if (filename == NULL) {
         fprintf(stderr, "There is no filename given.\n");
@@ -148,14 +148,11 @@ char ***getRTabFromFile(char *filename) {
                     return NULL;
                 }
             }
+
             n = n * 2;
         }
 
-        if (strcmp(fgets(line, sizeof (line), fp), "") == 0) {
-            fprintf(stderr, "Niepoprawne wczytanie linii z pliku");
-            free(rainbowTab);
-            return NULL;
-        }
+        fgets(line, sizeof (line), fp);
 
         for (i = 0; i < strlen(line) - 1; i++) {
             if (line[i] == ':') {
@@ -183,4 +180,3 @@ char ***getRTabFromFile(char *filename) {
 
     return rainbowTab;
 }
-
