@@ -5,7 +5,6 @@
 #include <string.h>
 #include "mpi.h"
 
-#define MAXSIZE 1024
 #define TAG 1
 
 
@@ -41,9 +40,9 @@ int main(int argc, char *argv[]) {
             passType = atoi(argv[7]); 
             depth = atoi(argv[9]); 
             filename_rt = argv[11]; 
-            fprintf(stdout, "Niepoprawne parametry! Uruchom program z opcja '-h', zeby zobaczyc pomoc dla programu"
-                    " lub '-u', zeby zobaczyc uzycie.");
-            return -1;
+        } else {
+        	fprintf(stdout, "Niepoprawne parametry! Uruchom program z opcja '-h', zeby zobaczyc pomoc dla programu lub '-u', zeby zobaczyc uzycie.");
+        	return -1;
         }
    }       /*Lamanie hasla*/
     else if (argc > 1 && strcmp(argv[1], "-b") == 0) {
@@ -70,7 +69,7 @@ int main(int argc, char *argv[]) {
                 "W programie istnieje rowniez mozliwosc lamania hasel:\n"
                 "-cr <hash> hash, ktory ma zostac zlamany,\n"
                 "-r <nazwa pliku> plik z tablica teczowa, ktory zostanie wczytany do programu.\n");
-       
+       return 0;
     }/*Wyswietlenie sposobu uzycia programu*/
     else if (argc > 1 && strcmp(argv[1], "-u") == 0) {
         fprintf(stdout, "Generowanie tablicy:\n"
@@ -125,10 +124,10 @@ int main(int argc, char *argv[]) {
         /* obliczenie wielkosci czesci tablicy przydzielanych dla kazdego procesu */
         workSize = passCount / lp;
         workRestSize = passCount % lp;
+        printf("Hasel przydzielonych do jednego procesu: %d\n", workSize);
 
         for (dest = 1; dest < lp; dest++) {
             MPI_Send(&workSize, 1, MPI_INT, dest, TAG, MPI_COMM_WORLD); /*wyslanie wiadomosci o ilosci przydzielonych hasel*/
-            printf("Hasel przydzielonych do jednego procesu: %d\n", workSize);
 
             msgStream = (char *) malloc(workSize * (passSize + 1) * sizeof (char)); /*alokacja pamieci dla lancucha skladajacego sie z napisow czesci tablicy*/
             /* Laczenie napisow, gdzie '\n' oddziela poszczegolne wyrazy */
@@ -202,7 +201,7 @@ int main(int argc, char *argv[]) {
         for (src = 1; src < lp; src++) {
             msgTab[src - 1] = malloc(workSize * (passSize + 1 + hashSize + 1) * sizeof (char));
             MPI_Recv(msgTab[src - 1], workSize * (passSize + 1 + hashSize + 1) + 1, MPI_CHAR, src, TAG, MPI_COMM_WORLD, &status);
-            /*printf("Odebrano lancuch koncowy z %d: %s\n",src, msgTab[src-1]);*/
+            printf("Odebrano lancuch koncowy z %d: %s\n",src, msgTab[src-1]);
         }
     }
 
@@ -229,10 +228,10 @@ int main(int argc, char *argv[]) {
                 j++;
             }
         }
-        for (i = 0; i < size; i++) {
+        for (i = 0; i < lp; i++) {
         	free(msgTab[i]);
         }
-        free(msgTab[i]);
+        free(msgTab);
         /* Dolaczenie do tablicy reszty lancuchow z procesu glownego */
         i = 0;
         while (j < passCount) {

@@ -161,25 +161,25 @@ char*** createRainbowTable(char **wordstab, int depth, int n, int passw_size, in
     }
 
     for (j = 0; j < n; j++) {
-        printf("lancuch[%d]:\n", j);
+        //printf("lancuch[%d]:\n", j);
 
         for (i = 0; i < depth; i++) {
 
             if (i == 0) {
-                printf("rainbowtab[%d][0]=wordstab[%d]\n", j, j);
+                //printf("rainbowtab[%d][0]=wordstab[%d]\n", j, j);
                 h = (char *) hash(*(wordstab + j));
-                printf("rainbowtab1[%d][%d]=%s\n", j, i + 1, h);
+                //printf("rainbowtab1[%d][%d]=%s\n", j, i + 1, h);
             }
 
             if (i > 0 && i % 2 == 0) {
                 h = (char *) hash(r);
-                printf("rainbowtab2[%d][%d]=%s\n", j, i + 1, h);
+                //printf("rainbowtab2[%d][%d]=%s\n", j, i + 1, h);
             }
 
 
             if (i % 2 != 0) {
                 r = (char *) reduce(h, depth, passw_size, passw_type);
-                printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
+                //printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
             }
 
             if (i == depth - 1) {
@@ -193,7 +193,7 @@ char*** createRainbowTable(char **wordstab, int depth, int n, int passw_size, in
     quicksort(rainbowtab, 0, n - 1);
 
     for (i = 0; i < n; i++) {
-        printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
+        //printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
     }
 
     return rainbowtab;

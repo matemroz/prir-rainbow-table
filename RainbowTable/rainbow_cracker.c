@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "rainbow_cracker.h"
+
 
 /* 
  * Funkcja łamiąca zaszyfrowane algorytmem DES hasło. 
@@ -17,6 +19,11 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int 
     int i; /*zmienna pomocnicza - iterator*/
     char *hashTmp; /*zmienna pomocnicza przechowujaca hash*/
     char *passTmp; /*zmienna pomocnicza przechowujaca haslo*/
+
+    if (passSize < MIN_PASS_SIZE || passSize > MAX_PASS_SIZE) {
+            fprintf(stderr, "Haslo powinno miec co najmniej 3 znaki i nie więcej niż 10 znakow");
+            return;
+    }
 
     l = 0;
 
@@ -59,14 +66,14 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int 
 
     if (hashFound == 0) {
         printf("Hasla nie ma w tablicy teczowej!\n");
+        free(hashTmp);
         return;
     }
 
     /* Wyszukiwanie zadanego hasha w lancuchu */
     printf("Szukany hash: %s\n", str);
-    passTmp = (char *) malloc(strlen(passSize) * sizeof (char));
+    passTmp = (char *) malloc(passSize * sizeof (char));
     strcpy(passTmp, rainbowTable[s][0]);
-    //passTmp = rainbowTable[s][0];
     i = 0;
     while (i < depth) {
         //hashTmp = (char *)hash(passTmp);
@@ -74,6 +81,8 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int 
         printf("[Wyszukiwanie w lancuchu:] %s -> %s \n", passTmp, hashTmp);
         if (strcmp(hashTmp, str) == 0) {
             printf("-----------------------------\nHaslo to: %s\n-----------------------------\n", passTmp);
+            free(hashTmp);
+            free(passTmp);
             return;
         }
         //passTmp =(char *)reduce(hashTmp,depth,10,passw_type);
@@ -81,6 +90,8 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int 
         i++;
     }
 
-    fprintf(stderr, "Nastapil blad podczas odzyskiwania hasla z lancucha!\n");
+    printf("Nie udalo sie odnalesc hasla w lancuchu!\n");
+    free(hashTmp);
+    free(passTmp);
 
 }
