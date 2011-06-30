@@ -30,6 +30,8 @@ int main(int argc, char *argv[]) {
     char **msgTab;
     char *filename_rt;
     char ***finalRainbowTab;
+    time_t startTime;
+    time_t endTime;
     MPI_Status status;
 
     /*Generowanie tablicy teczowej*/
