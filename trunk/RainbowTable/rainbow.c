@@ -19,6 +19,11 @@ char *hash(char *password) {
 
     char salt[3] = "AB";
 
+    if (strlen(password) < MIN_PASS_SIZE || strlen(password) > MAX_PASS_SIZE) {
+        fprintf(stderr, "Haslo powinno miec co najmniej 3 znaki i nie więcej niż 10 znakow");
+        return NULL;
+    }
+
     if (strcmp(password, "") == 0) {
         fprintf(stderr, "Nie podano hasza, ktore ma byc poddane haszowaniu!");
         return NULL;
@@ -29,7 +34,13 @@ char *hash(char *password) {
     return password;
 }
 
-char *reduce(char *hash, int deep, int passw_size, int passw_type) {
+/*Funkcja redukcji w tablicy teczowej. Jako argumenty przyjmuje kolejno:
+ hash - zostanie poddany redukcji,
+ depth - glebokosc tablicy teczowej,
+ passw_size - prawdopodobny rozmiar zaszyfrowanego hasla.
+ passw_type - rodzaj znakow na podstawie, ktorego bedzie generowana tablica.
+ */
+char *reduce(char *hash, int depth, int passw_size, int passw_type) {
     char red_hash[passw_size + 1];
     int hash_int[2];
     int reduce_tab[2];
@@ -39,6 +50,11 @@ char *reduce(char *hash, int deep, int passw_size, int passw_type) {
     int j;
     int chars_size = 0;
     char *charset;
+
+    if (passw_size < MIN_PASS_SIZE || passw_size > MAX_PASS_SIZE) {
+        fprintf(stderr, "Podano zbyt mala lub zbyt tuza liczbe znakow prawdopodobnego hasla");
+        return NULL;
+    }
 
     switch (passw_type) {
 
@@ -99,8 +115,8 @@ char *reduce(char *hash, int deep, int passw_size, int passw_type) {
     hash_int[0] = str_to_int(hash_left_half, DES_CHARS_NUM / 2 - 1);
     hash_int[1] = str_to_int(hash_right_half, DES_CHARS_NUM / 2);
 
-    reduce_tab[0] = hash_int[0] ^ deep;
-    reduce_tab[1] = hash_int[1] ^ deep;
+    reduce_tab[0] = hash_int[0] ^ depth;
+    reduce_tab[1] = hash_int[1] ^ depth;
 
     for (i = 0; i < passw_size / 2; i++) {
         int index = (reduce_tab[0] ^ ((i * i) ^ (str_to_int(hash, DES_CHARS_NUM) * (i + 1)))) % chars_size;
@@ -121,7 +137,7 @@ char *reduce(char *hash, int deep, int passw_size, int passw_type) {
  * Funkcja zwracająca dwuwymiarową tablicę tęczową, o danej głębokości i rozmiarze. Jako
  * argument otrzymuje również listę wyrazów, z których będą generowane ciągi.
  */
-char*** createRainbowTable(char **wordstab, int deep, int n, int passw_size, int passw_type) {
+char*** createRainbowTable(char **wordstab, int depth, int n, int passw_size, int passw_type) {
     int i;
     int j;
     char *h;
@@ -130,18 +146,24 @@ char*** createRainbowTable(char **wordstab, int deep, int n, int passw_size, int
     char ***rainbowtab = (char ***) malloc(n * sizeof (char **));
 
     for (i = 0; i < n; i++) {
-        *(rainbowtab + i) = (char **) malloc(deep * sizeof (char *));
+        *(rainbowtab + i) = (char **) malloc(depth * sizeof (char *));
+        if (rainbowtab == NULL) {
+            fprintf(stderr, "Nie mozna przydzielic pamieci 06");
+            free(rainbowtab);
+            return NULL;
+        }
     }
 
     if (rainbowtab == NULL) {
         fprintf(stderr, "Nie mozna przydzielic pamieci 02");
+        free(rainbowtab);
         return NULL;
     }
 
     for (j = 0; j < n; j++) {
         printf("lancuch[%d]:\n", j);
 
-        for (i = 0; i < deep; i++) {
+        for (i = 0; i < depth; i++) {
 
             if (i == 0) {
                 printf("rainbowtab[%d][0]=wordstab[%d]\n", j, j);
@@ -150,17 +172,17 @@ char*** createRainbowTable(char **wordstab, int deep, int n, int passw_size, int
             }
 
             if (i > 0 && i % 2 == 0) {
-                h =  (char *) hash(r);
+                h = (char *) hash(r);
                 printf("rainbowtab2[%d][%d]=%s\n", j, i + 1, h);
             }
 
 
             if (i % 2 != 0) {
-                r = (char *) reduce(h, deep, passw_size, passw_type);
+                r = (char *) reduce(h, depth, passw_size, passw_type);
                 printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
             }
 
-            if (i == deep - 1) {
+            if (i == depth - 1) {
                 rainbowtab[j][1] = h;
             }
         }
@@ -169,6 +191,7 @@ char*** createRainbowTable(char **wordstab, int deep, int n, int passw_size, int
     }
 
     quicksort(rainbowtab, 0, n - 1);
+
     for (i = 0; i < n; i++) {
         printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
     }

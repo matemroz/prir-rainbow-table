@@ -1,3 +1,6 @@
+/*formatter.c*/
+
+/*Funkcja konwertujaca lancuch do postaci int. Zwraca int w wypadku powodzenia,*/
 int str_to_int(char *str, int n) {
     int str_int;
     int i;

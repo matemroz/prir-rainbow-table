@@ -1,3 +1,5 @@
+/*sorter.h*/
+
 void quicksort(char*** tab, int p, int k);
 
 int merge(char*** tab, int p, int k);

@@ -1,3 +1,5 @@
+/*sorter.c*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,6 +7,7 @@
 #include "sorter.h"
 #include "rainbow.h"
 
+/*Funkcja quicksort sortujaca tablice tab*/
 void quicksort(char*** tab, int p, int k) {
     if (p < k) {
         int q = merge(tab, p, k);
@@ -13,6 +16,7 @@ void quicksort(char*** tab, int p, int k) {
     }
 }
 
+/*Funkcja sluzaca do uzyskania optymalnego podzialu tablicy*/
 int merge(char*** tab, int p, int k) {
     int i;
     int j;
@@ -21,8 +25,7 @@ int merge(char*** tab, int p, int k) {
     i = p - 1;
 
     for (j = p; j < k; j++) {
-        if(strcmp(tab[j][1], x) <= 0)
-        {
+        if (strcmp(tab[j][1], x) <= 0) {
             i++;
             swap(&tab[i][0], &tab[j][0]);
             swap(&tab[i][1], &tab[j][1]);
@@ -30,10 +33,11 @@ int merge(char*** tab, int p, int k) {
     }
     swap(&tab[i + 1][0], &tab[k][0]);
     swap(&tab[i + 1][1], &tab[k][1]);
-    
+
     return i + 1;
 }
 
+/*Funkcja zamieniajaca miejscami dwa lancuchy*/
 void swap(char **str1, char **str2) {
     char *temp = *str1;
     *str1 = *str2;

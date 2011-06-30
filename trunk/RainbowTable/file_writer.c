@@ -1,30 +1,33 @@
+/*file_writer.c*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "file_writer.h"
 
+/*Funkcja zapisująca tablice teczowa do pliku. Zwraca -1 w przypadku niepowodzenia, a
+ 0 w wypadku poprawnego działania.*/
 int saveRTabToFile(char *filename, char ***rainbowTab, int tabSize) {
     FILE *fp;
     int i;
-    int j;
 
     if (tabSize <= 0) {
-        fprintf(stderr, "You must give rainbow table size.\n");
+        fprintf(stderr, "Musisz podac rozmiar tablicy.\n");
         return -1;
     }
 
     if (filename == NULL) {
-        fprintf(stderr, "There is no filename given.\n");
+        fprintf(stderr, "Nie podano nazwy pliku.\n");
         return -1;
     }
 
     if ((fp = fopen(filename, "w")) == NULL) {
-        fprintf(stderr, "Cannot open a file for storing rainbow table data!\n");
+        fprintf(stderr, "Nie mozna otworzyc pliku dla przechowywania tablicy!\n");
         return -1;
     }
 
-    for(i = 0; i < tabSize; i++){
+    for (i = 0; i < tabSize; i++) {
         fprintf(fp, "%s:%s\n", rainbowTab[i][0], rainbowTab[i][1]);
     }
 
