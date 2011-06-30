@@ -10,5 +10,6 @@
   *  zwiększyć bezkolizyjność reduce()
   *  rozkminić dlaczego pojawiają się krzaki przy pierwszym uruchomieniu reduce(),
   *  minimalna wartość hasła - sprawdzenie w rainbow_cracker.c
-  
+  *  rozkminić MAX_TAB_SIZE - w rainbow_cracker.c (czy nie za mały?),
+   
   
