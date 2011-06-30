@@ -73,7 +73,7 @@ char** readPassFile(char* filename, int maxCharacters) {
         line[maxCharacters] = 0;
         strncpy(tab[passCount], line, maxCharacters);
         tab[passCount][maxCharacters] = 0;
-        printf("tab[%d]: %s\n", passCount, tab[passCount]);
+        //printf("tab[%d]: %s\n", passCount, tab[passCount]);
         passCount++;
     }
 
