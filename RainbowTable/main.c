@@ -233,7 +233,7 @@ int main(int argc, char *argv[]) {
                     j++;
                 }
             }
-            for (i = 0; i < lp; i++) {
+            for (i = 0; i < (lp - 1); i++) {
                 free(msgTab[i]);
             }
             free(msgTab);
