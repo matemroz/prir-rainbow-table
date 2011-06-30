@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_TAB_SIZE 1024
-#define MAX_PASS_SIZE 10
 
 /* 
  * Funkcja łamiąca zaszyfrowane algorytmem DES hasło. 
@@ -66,7 +64,7 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int 
 
     /* Wyszukiwanie zadanego hasha w lancuchu */
     printf("Szukany hash: %s\n", str);
-    passTmp = (char *) malloc(strlen(rainbowTable[s][0]) * sizeof (char));
+    passTmp = (char *) malloc(strlen(passSize) * sizeof (char));
     strcpy(passTmp, rainbowTable[s][0]);
     //passTmp = rainbowTable[s][0];
     i = 0;

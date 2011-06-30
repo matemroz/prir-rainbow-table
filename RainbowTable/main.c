@@ -121,14 +121,14 @@ int main(int argc, char *argv[]) {
 
     /* WYSYLANIE DANYCH O POCZATKACH LANUCHOW */
     if (rank == 0) {
-        printf("passCount: %d\n", passCount);
+        printf("Zczytanie hasel: %d\n", passCount);
         /* obliczenie wielkosci czesci tablicy przydzielanych dla kazdego procesu */
         workSize = passCount / lp;
         workRestSize = passCount % lp;
 
         for (dest = 1; dest < lp; dest++) {
             MPI_Send(&workSize, 1, MPI_INT, dest, TAG, MPI_COMM_WORLD); /*wyslanie wiadomosci o ilosci przydzielonych hasel*/
-            printf("Wyslano worksize = %d", workSize);
+            printf("Hasel przydzielonych do jednego procesu: %d\n", workSize);
 
             msgStream = (char *) malloc(workSize * (passSize + 1) * sizeof (char)); /*alokacja pamieci dla lancucha skladajacego sie z napisow czesci tablicy*/
             /* Laczenie napisow, gdzie '\n' oddziela poszczegolne wyrazy */
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
                 strcat(msgStream, "\n");
                 i++;
             }
-            printf("Wynik polaczenia %d[rozmiar: %d]:\n%s\n", dest, strlen(msgStream), msgStream);
+            //printf("Wynik polaczenia %d[rozmiar: %d]:\n%s\n", dest, strlen(msgStream), msgStream);
 
             MPI_Send(msgStream, strlen(msgStream) + 1, MPI_CHAR, dest, TAG, MPI_COMM_WORLD); /*wyslanie lancucha z polaczonymi haslami*/
 
@@ -149,12 +149,12 @@ int main(int argc, char *argv[]) {
         passTab = passTab + workSize * (lp - 1);
     } else {
         MPI_Recv(&workSize, 1, MPI_INT, 0, TAG, MPI_COMM_WORLD, &status); /*odebranie wiadomosci o ilosci przydzielonych hasel*/
-        printf("Odebrano [workSize: %d]\n", workSize);
+        //printf("Odebrano [workSize: %d]\n", workSize);
 
         msgStream = (char *) malloc(workSize * (passSize + 1) * sizeof (char));
 
         MPI_Recv(msgStream, workSize * (passSize + 1) + 1, MPI_CHAR, 0, TAG, MPI_COMM_WORLD, &status); /*odebranie lancucha z polaczonymi haslami*/
-        printf("Odebrano lancuch[rozmiar: %d]:\n%s\n", strlen(msgStream), msgStream);
+        //printf("Odebrano lancuch[rozmiar: %d]:\n%s\n", strlen(msgStream), msgStream);
 
         passTab = (char **) malloc((workSize + 1) * sizeof (char *));
         for (i = 0; i < workSize; i++) {
@@ -169,6 +169,7 @@ int main(int argc, char *argv[]) {
             recvPass = strtok(NULL, "\n");
             i++;
         }
+        free(msgStream);
     }
 
     /* GENEROWANIE LANCUCHOW */
@@ -228,6 +229,10 @@ int main(int argc, char *argv[]) {
                 j++;
             }
         }
+        for (i = 0; i < size; i++) {
+        	free(msgTab[i]);
+        }
+        free(msgTab[i]);
         /* Dolaczenie do tablicy reszty lancuchow z procesu glownego */
         i = 0;
         while (j < passCount) {
@@ -245,6 +250,13 @@ int main(int argc, char *argv[]) {
         }
         printf("----------------------------------------\n");
         crackPassword("AB.pF9XiT7ZVE", finalRainbowTab, passCount, depth, passSize, passType);
+
+        for (i = 0; i < passCount; i++) {
+                    free(finalRainbowTab[i][0]);
+                    free(finalRainbowTab[i][1]);
+                    free(finalRainbowTab[i]);
+        }
+        free(finalRainbowTab);
     }
 
     /* ZAKONCZENIE MPI*/
