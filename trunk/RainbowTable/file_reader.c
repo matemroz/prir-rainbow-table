@@ -8,8 +8,6 @@
 #define DEFAULT_PASS_NUM 1024
 #define LINE_LENGTH 64
 
-/*Funkcja wczytuje wyrazy, ktore beda wykorzystywane w tworzeniu tablicy teczowej.
- W wypadku powodzenia zwraca tablice wyrazow, w przeciwnym wypadku zwraca NULL*/
 char** readPassFile(char* filename, int maxCharacters) {
     FILE *fp;
     int i;
@@ -35,14 +33,12 @@ char** readPassFile(char* filename, int maxCharacters) {
     }
 
     if (filename == NULL) {
-        free(tab);
         return 0;
     }
 
     if ((fp = fopen(filename, "r")) == NULL) {
-        fprintf(stderr, "Nie mozna otworzyc pliku z haslami!\n");
-        free(tab);
-        return NULL;
+        printf("Nie mozna otworzyc pliku z haslami!\n");
+        return 0;
     }
 
     while (feof(fp) == 0) {
@@ -58,33 +54,31 @@ char** readPassFile(char* filename, int maxCharacters) {
 
             for (i = n; i < n * 2; i++) {
                 tab[i] = (char *) malloc((maxCharacters + 1) * sizeof (char));
+                if (tmpTab == NULL) {
+                    fprintf(stderr, "Nie mozna przydzielic pamieci 12");
+                    free(tab);
+                    return NULL;
+                }
             }
 
             n = n * 2;
         }
-        if(strcmp(fgets(line, sizeof (line), fp), "") == 0){
-            fprintf(stderr, "Niepoprawnie wczytana linia z pliku");
-            free(tab);
-            return NULL;
-        }
-
+        fgets(line, sizeof (line), fp);
         line[strlen(line) - 1] = 0;
 
         line[maxCharacters] = 0;
         strncpy(tab[passCount], line, maxCharacters);
         tab[passCount][maxCharacters] = 0;
-        //printf("tab[%d]: %s\n", passCount, tab[passCount]);
         passCount++;
     }
 
-    tab[passCount] = 0;
+    tab[passCount] = 0; //ostatnia komorka zakonczona nullem, aby w main mozna bylo zliczyc hasla
 
     fclose(fp);
 
     return tab;
 }
 
-/*Funkcja wczytujaca tablice teczowa z pliku. Zwraca NULL w przypadku niepowodzenia.*/
 char ***getRTabFromFile(char *filename) {
     int n = DEFAULT_PASS_NUM;
     int counter = 0;
@@ -99,7 +93,6 @@ char ***getRTabFromFile(char *filename) {
 
     if (rainbowTab == NULL) {
         fprintf(stderr, "Nie mozna przydzielic pamieci 03");
-        free(rainbowTab);
         return NULL;
     }
 
