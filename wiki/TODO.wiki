@@ -5,11 +5,8 @@
   *  strcpy zamienić na strncpy,
   *  wykorzystanie parametrow dla do generowania i lamania hasla,
   *  quicksort - sprawdzić, czy lepiej usuwać z rainbow.c czy nie,
-  *  main.c, rainbow_cracker.c - nie wszystkie malloc mają free,
   *  wyeliminować warningi z pedantic
   *  zwiększyć bezkolizyjność reduce()
   *  rozkminić dlaczego pojawiają się krzaki przy pierwszym uruchomieniu reduce(),
-  *  minimalna wartość hasła - sprawdzenie w rainbow_cracker.c
-  *  rozkminić MAX_TAB_SIZE - w rainbow_cracker.c (czy nie za mały?),
    
   
