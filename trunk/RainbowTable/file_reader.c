@@ -145,6 +145,11 @@ char ***getRTabFromFile(char *filename) {
             n = n * 2;
         }
 
+        if (counter == 0) {
+            fgets(line, sizeof (line), fp);
+            counter++;
+        }
+
         fgets(line, sizeof (line), fp);
 
         for (i = 0; i < strlen(line) - 1; i++) {
@@ -168,6 +173,7 @@ char ***getRTabFromFile(char *filename) {
         j = 0;
         rainbowTab[counter][0] = reduce;
         rainbowTab[counter++][1] = hash;
+        printf("%s:%s\n", reduce, hash);
     }
     fclose(fp);
 

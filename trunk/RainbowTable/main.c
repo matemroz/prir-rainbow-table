@@ -254,7 +254,7 @@ int main(int argc, char *argv[]) {
             }
             printf("----------------------------------------\n");
 
-            saveRTabToFile(filename_out, finalRainbowTab, passCount);
+            saveRTabToFile(filename_out, finalRainbowTab, passCount, depth, passSize, passType);
 
             /*crackPassword("AB.pF9XiT7ZVE", finalRainbowTab, passCount, depth, passSize, passType);*/
 
@@ -271,8 +271,31 @@ int main(int argc, char *argv[]) {
     }
 
     if (argc > 1 && strcmp(argv[1], "-b") == 0) {
+
+
+        FILE *fp;
+        fp = fopen(filename_rt, "r");
+
+        passCount = 0;
+        depth = 0;
+        passSize = 0;
+        passType = 0;
+
+        if (fp == NULL) {
+            printf("Problem z wczytaniem pliku!\n");
+            return -1;
+        }
+        if (fscanf(fp, "%d %d %d %d\n", &passCount, &depth, &passSize, &passType) <= 0) {
+            printf("Problem z odczytaniem wartosci z pliku!");
+            return -1;
+        }
+
+        fclose(fp);
+
+        printf("%d %d %d %d\n", passCount, depth, passSize, passType);
+
         getRTabFromFile(filename_rt);
-        /*crackPassword(hash_rt, finalRainbowTab, passCount, depth, passSize, passType);*/
+        crackPassword(hash_rt, finalRainbowTab, passCount, depth, passSize, passType);
     }
 
     return 0;

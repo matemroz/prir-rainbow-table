@@ -8,7 +8,7 @@
 
 /*Funkcja zapisująca tablice teczowa do pliku. Zwraca -1 w przypadku niepowodzenia, a
  0 w wypadku poprawnego działania.*/
-int saveRTabToFile(char *filename, char ***rainbowTab, int tabSize) {
+int saveRTabToFile(char *filename, char ***rainbowTab, int tabSize, int depth, int  passSize, int passType) {
     FILE *fp;
     int i;
 
@@ -22,10 +22,12 @@ int saveRTabToFile(char *filename, char ***rainbowTab, int tabSize) {
         return -1;
     }
 
-    if ((fp = fopen(filename, "w")) == NULL) {
+    if ((fp = fopen(filename, "a+")) == NULL) {
         fprintf(stderr, "Nie mozna otworzyc pliku dla przechowywania tablicy!\n");
         return -1;
     }
+
+    fprintf(fp, "%d %d %d %d\n", tabSize, depth, passSize, passType);
 
     for (i = 0; i < tabSize; i++) {
         fprintf(fp, "%s:%s\n", rainbowTab[i][0], rainbowTab[i][1]);
