@@ -1,7 +1,6 @@
 CC=mpicc
 RM=rm
-CCFLAGS=-c -Wall --pedantic
-CFLAGS=-lcr -c
+CFLAGS=-lcr -c -Wall --pedantic
 LIBS=-lcrypt
 OBJS=main.o file_reader.o rainbow.o rainbow_cracker.o sorter.o formatter.o file_writer.o
 

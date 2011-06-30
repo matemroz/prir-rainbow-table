@@ -2,6 +2,8 @@
 
 #define DES_CHARS_NUM 14
 #define RED_CHARS_NUM 10
+#define MIN_PASS_SIZE 3
+#define MAX_PASS_SIZE 10
 
 static const char alphanum[62] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 static const char bigalphanum[36] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
