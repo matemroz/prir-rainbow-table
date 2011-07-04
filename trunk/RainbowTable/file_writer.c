@@ -22,7 +22,7 @@ int saveRTabToFile(char *filename, char ***rainbowTab, int tabSize, int depth, i
         return -1;
     }
 
-    if ((fp = fopen(filename, "a+")) == NULL) {
+    if ((fp = fopen(filename, "w")) == NULL) {
         fprintf(stderr, "Nie mozna otworzyc pliku dla przechowywania tablicy!\n");
         return -1;
     }

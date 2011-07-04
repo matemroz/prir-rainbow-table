@@ -92,18 +92,26 @@ char ***getRTabFromFile(char *filename) {
     char ***rainbowTab = (char ***) malloc(n * sizeof (char **));
 
     if (rainbowTab == NULL) {
-        fprintf(stderr, "Nie mozna przydzielic pamieci 03");
-        return NULL;
+            fprintf(stderr, "Nie mozna przydzielic pamieci 03");
+            return NULL;
     }
 
     for (i = 0; i < n; i++) {
-        *(rainbowTab + i) = (char **) malloc(LINE_LENGTH * sizeof (char *));
-        if (rainbowTab == NULL) {
-            fprintf(stderr, "Nie mozna przydzielic pamieci 04");
-            free(rainbowTab);
-            return NULL;
+        rainbowTab[i] = (char **) malloc(2 * sizeof (char *));
+        if (rainbowTab[i] == NULL){
+        	fprintf(stderr, "Nie mozna przydzielic pamieci 04");
+        	free(rainbowTab);
+        	return NULL;
+        }
+        rainbowTab[i][0] = (char *) malloc(LINE_LENGTH/2 * sizeof (char));
+        rainbowTab[i][1] = (char *) malloc(LINE_LENGTH/2 * sizeof (char));
+        if ( (rainbowTab[i][0] == NULL) || (rainbowTab[i][1] == NULL) ) {
+        	fprintf(stderr, "Nie mozna przydzielic pamieci 05");
+        	free(rainbowTab);
+        	return NULL;
         }
     }
+
     char line[LINE_LENGTH];
 
     if (filename == NULL) {
@@ -134,12 +142,14 @@ char ***getRTabFromFile(char *filename) {
             rainbowTab = tmpRainbowTab;
 
             for (i = n; i < n * 2; i++) {
-                rainbowTab[i] = (char **) malloc(LINE_LENGTH * sizeof (char *));
-                if (rainbowTab == NULL) {
+                rainbowTab[i] = (char **) malloc(2 * sizeof (char *));
+                if (rainbowTab[i] == NULL) {
                     fprintf(stderr, "Nie mozna przydzielic pamieci 09");
                     free(rainbowTab);
                     return NULL;
                 }
+                rainbowTab[i][0] = (char *)malloc(LINE_LENGTH/2*sizeof(char));
+                rainbowTab[i][1] = (char *)malloc(LINE_LENGTH/2*sizeof(char));
             }
 
             n = n * 2;
@@ -150,7 +160,9 @@ char ***getRTabFromFile(char *filename) {
             counter++;
         }
 
-        fgets(line, sizeof (line), fp);
+        if(fgets(line, sizeof (line), fp) == NULL) {
+        	return rainbowTab;
+        }
 
         for (i = 0; i < strlen(line) - 1; i++) {
             if (line[i] == ':') {
@@ -171,9 +183,11 @@ char ***getRTabFromFile(char *filename) {
 
         flag = 0;
         j = 0;
-        rainbowTab[counter][0] = reduce;
-        rainbowTab[counter++][1] = hash;
-        printf("%s:%s\n", reduce, hash);
+        //rainbowTab[counter][0] = reduce;
+        //rainbowTab[counter++][1] = hash;
+        strcpy(rainbowTab[counter][0],reduce);
+        strcpy(rainbowTab[counter++][1],hash);
+        //printf("%s:%s\n", reduce, hash);
     }
     fclose(fp);
 
