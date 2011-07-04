@@ -11,7 +11,7 @@
  * Funkcja łamiąca zaszyfrowane algorytmem DES hasło. 
  * Zwraca odszyfrowane podane w argumencie hasło.
  */
-void crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int passSize, int passw_type) {
+char* crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int passSize, int passw_type) {
     int l; /*początek tablicy*/
     int p = tabSize - 1; /*koniec tablicy*/
     int s = 0; /*środek tablicy*/
@@ -82,8 +82,7 @@ void crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int 
         if (strcmp(hashTmp, str) == 0) {
             printf("-----------------------------\nHaslo to: %s\n-----------------------------\n", passTmp);
             free(hashTmp);
-            free(passTmp);
-            return;
+            return passTmp;
         }
         //passTmp =(char *)reduce(hashTmp,depth,10,passw_type);
         strcpy(passTmp, (char *) reduce(hashTmp, depth, passSize, passw_type));
