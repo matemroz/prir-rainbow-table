@@ -64,6 +64,10 @@ char** readPassFile(char* filename, int maxCharacters) {
             n = n * 2;
         }
         fgets(line, sizeof (line), fp);
+        if (strlen(line) <= 3) {
+        	//printf("Haslo ma za malo znakow\n");
+        	continue;
+        }
         line[strlen(line) - 1] = 0;
 
         line[maxCharacters] = 0;
