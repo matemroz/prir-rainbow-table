@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "mpi.h"
 
 #define TAG 1
@@ -31,9 +32,12 @@ int main(int argc, char *argv[]) {
     char *filename_rt;
     char *filename_out;
     char ***finalRainbowTab;
-    time_t startTime;
-    time_t endTime;
     MPI_Status status;
+    clock_t startClock;
+    clock_t endClock;
+    time_t start;
+    time_t end;
+    double timeDiff;
 
     /*Generowanie tablicy teczowej*/
     if (argc > 1 && strcmp(argv[1], "-gen") == 0) {
@@ -125,7 +129,11 @@ int main(int argc, char *argv[]) {
 
         /* WYSYLANIE DANYCH O POCZATKACH LANUCHOW */
         if (rank == 0) {
-            printf("Zczytanie hasel: %d\n", passCount);
+        	/* Ropoczecie zliczania czasu po wejsciu w proces komunikacji miedzy procesami i generowania tablicy teczowej */
+        	startClock = clock();
+        	time(&start);
+
+            printf("Zczytanych hasel: %d\n", passCount);
             /* obliczenie wielkosci czesci tablicy przydzielanych dla kazdego procesu */
             workSize = passCount / lp;
             workRestSize = passCount % lp;
@@ -206,7 +214,7 @@ int main(int argc, char *argv[]) {
             for (src = 1; src < lp; src++) {
                 msgTab[src - 1] = malloc(workSize * (passSize + 1 + hashSize + 1) * sizeof (char));
                 MPI_Recv(msgTab[src - 1], workSize * (passSize + 1 + hashSize + 1) + 1, MPI_CHAR, src, TAG, MPI_COMM_WORLD, &status);
-                printf("Odebrano lancuch koncowy z %d: %s\n", src, msgTab[src - 1]);
+                //printf("Odebrano lancuch koncowy z %d: %s\n", src, msgTab[src - 1]);
             }
         }
 
@@ -248,11 +256,19 @@ int main(int argc, char *argv[]) {
 
             /* Posortowanie i wypisanie tablicy */
             quicksort(finalRainbowTab, 0, passCount - 1);
+
+            /* Zakonczenie zliczania czasu po posortowaniu tablicy */
+            endClock = clock();
+            time(&end);
+            timeDiff = (endClock - startClock)/(double)CLOCKS_PER_SEC;
+
             printf("|---> WYGENEROWANA TABLICA TECZOWA <---|\n");
             for (i = 0; i < passCount; i++) {
                 printf("%s -> %s\n", finalRainbowTab[i][0], finalRainbowTab[i][1]);
             }
             printf("----------------------------------------\n");
+
+            printf("Czas wygenerowania tablicy, skladajacej sie z %d wierszy, wynosi %.4lf || %.4lf",passCount,timeDiff,difftime(end,start));
 
             saveRTabToFile(filename_out, finalRainbowTab, passCount, depth, passSize, passType);
 
@@ -292,10 +308,14 @@ int main(int argc, char *argv[]) {
 
         fclose(fp);
 
-        printf("%d %d %d %d\n", passCount, depth, passSize, passType);
+        //printf("%d %d %d %d\n", passCount, depth, passSize, passType);
 
-        getRTabFromFile(filename_rt);
-        crackPassword(hash_rt, finalRainbowTab, passCount, depth, passSize, passType);
+        rainbowTab = getRTabFromFile(filename_rt);
+        if (rainbowTab == NULL) {
+        	printf("Problem z tablica teczowa!");
+        	return -1;
+        }
+        crackPassword(hash_rt, rainbowTab, passCount, depth, passSize, passType);
     }
 
     return 0;
