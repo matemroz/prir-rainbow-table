@@ -146,11 +146,18 @@ char*** createRainbowTable(char **wordstab, int depth, int n, int passw_size, in
     char ***rainbowtab = (char ***) malloc(n * sizeof (char **));
 
     for (i = 0; i < n; i++) {
-        *(rainbowtab + i) = (char **) malloc(depth * sizeof (char *));
-        if (rainbowtab == NULL) {
+        rainbowtab[i] = (char **) malloc(2 * sizeof (char *));
+        if (rainbowtab[i] == NULL) {
             fprintf(stderr, "Nie mozna przydzielic pamieci 06");
             free(rainbowtab);
             return NULL;
+        }
+        rainbowtab[i][0] = (char *)malloc((passw_size)*sizeof(char));
+        rainbowtab[i][1] = (char *)malloc((DES_CHARS_NUM)*sizeof(char));
+        if (rainbowtab[i][0] == NULL || rainbowtab[i][1] == NULL) {
+             fprintf(stderr, "Nie mozna przydzielic pamieci 06");
+             free(rainbowtab);
+             return NULL;
         }
     }
 
@@ -190,7 +197,7 @@ char*** createRainbowTable(char **wordstab, int depth, int n, int passw_size, in
         rainbowtab[j][0] = *(wordstab + j);
     }
 
-    quicksort(rainbowtab, 0, n - 1);
+    //quicksort(rainbowtab, 0, n - 1);
 
     for (i = 0; i < n; i++) {
         //printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
