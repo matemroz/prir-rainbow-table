@@ -133,11 +133,11 @@ int main(int argc, char *argv[]) {
         	startClock = clock();
         	time(&start);
 
-            printf("Zczytanych hasel: %d\n", passCount);
+            //printf("Zczytanych hasel: %d\n", passCount);
             /* obliczenie wielkosci czesci tablicy przydzielanych dla kazdego procesu */
             workSize = passCount / lp;
             workRestSize = passCount % lp;
-            printf("Hasel przydzielonych do jednego procesu: %d\n", workSize);
+            //printf("Hasel przydzielonych do jednego procesu: %d\n", workSize);
 
             for (dest = 1; dest < lp; dest++) {
                 MPI_Send(&workSize, 1, MPI_INT, dest, TAG, MPI_COMM_WORLD); /*wyslanie wiadomosci o ilosci przydzielonych hasel*/
@@ -145,7 +145,9 @@ int main(int argc, char *argv[]) {
                 msgStream = (char *) malloc(workSize * (passSize + 1) * sizeof (char)); /*alokacja pamieci dla lancucha skladajacego sie z napisow czesci tablicy*/
                 /* Laczenie napisow, gdzie '\n' oddziela poszczegolne wyrazy */
                 i = (dest - 1) * workSize;
+                strcpy(msgStream,"");
                 while (i < workSize * dest) {
+                	//printf("passTab[%d]=%s\n",i,passTab[i]);
                     strcat(msgStream, passTab[i]);
                     strcat(msgStream, "\n");
                     i++;
@@ -154,8 +156,8 @@ int main(int argc, char *argv[]) {
 
                 MPI_Send(msgStream, strlen(msgStream) + 1, MPI_CHAR, dest, TAG, MPI_COMM_WORLD); /*wyslanie lancucha z polaczonymi haslami*/
 
-                msgStream = NULL;
                 free(msgStream);
+                msgStream = NULL;
             }
 
             passTab = passTab + workSize * (lp - 1);
@@ -261,14 +263,16 @@ int main(int argc, char *argv[]) {
             endClock = clock();
             time(&end);
             timeDiff = (endClock - startClock)/(double)CLOCKS_PER_SEC;
-
+/*
             printf("|---> WYGENEROWANA TABLICA TECZOWA <---|\n");
             for (i = 0; i < passCount; i++) {
                 printf("%s -> %s\n", finalRainbowTab[i][0], finalRainbowTab[i][1]);
             }
             printf("----------------------------------------\n");
-
-            printf("Czas wygenerowania tablicy, skladajacej sie z %d wierszy, wynosi %.4lf || %.4lf",passCount,timeDiff,difftime(end,start));
+*/
+            printf("Czas wygenerowania tablicy, skladajacej sie z %d wierszy, wynosi %.4lf || %.4lf\n",passCount,timeDiff,difftime(end,start));
+            printf("Parametry wywolania: n=%d, p=%d, t=%d, d=%d\n",lp,passSize,passType,depth);
+            printf("---------------------------------------------------------------------------------\n");
 
             saveRTabToFile(filename_out, finalRainbowTab, passCount, depth, passSize, passType);
 
