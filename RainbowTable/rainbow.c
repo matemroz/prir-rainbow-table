@@ -29,9 +29,10 @@ char *hash(char *password) {
         return NULL;
     }
 
-    password = strdup(crypt(password, salt));
+    char *pass = malloc(15);
+    strcpy(pass,crypt(password, salt));
 
-    return password;
+    return pass;
 }
 
 /*Funkcja redukcji w tablicy teczowej. Jako argumenty przyjmuje kolejno:
@@ -133,6 +134,19 @@ char *reduce(char *hash, int depth, int passw_size, int passw_type) {
     return red_hash;
 }
 
+char* red(char* h,int depth,int passSize,int passType){
+	char* reduction;
+	int i,index;
+
+	reduction = malloc(passSize*sizeof(char));
+	for (i = 0; i < passSize-1; i++){
+		index = (h[i]*11 + h[i+2]*13 + h[i+4]*17 + h[13]*19 + h[11]*23)%64;
+		reduction[i] = alphanum[index%60];
+	}
+	reduction[passSize] = '\0';
+	return reduction;
+}
+
 /*
  * Funkcja zwracająca dwuwymiarową tablicę tęczową, o danej głębokości i rozmiarze. Jako
  * argument otrzymuje również listę wyrazów, z których będą generowane ciągi.
@@ -152,13 +166,13 @@ char*** createRainbowTable(char **wordstab, int depth, int n, int passw_size, in
             free(rainbowtab);
             return NULL;
         }
-        rainbowtab[i][0] = (char *)malloc((passw_size)*sizeof(char));
-        rainbowtab[i][1] = (char *)malloc((DES_CHARS_NUM)*sizeof(char));
-        if (rainbowtab[i][0] == NULL || rainbowtab[i][1] == NULL) {
+        //rainbowtab[i][0] = (char *)malloc((passw_size)*sizeof(char));
+        //rainbowtab[i][1] = (char *)malloc((DES_CHARS_NUM)*sizeof(char));
+        /*if (rainbowtab[i][0] == NULL || rainbowtab[i][1] == NULL) {
              fprintf(stderr, "Nie mozna przydzielic pamieci 06");
              free(rainbowtab);
              return NULL;
-        }
+        }*/
     }
 
     if (rainbowtab == NULL) {
@@ -173,34 +187,36 @@ char*** createRainbowTable(char **wordstab, int depth, int n, int passw_size, in
         for (i = 0; i < depth; i++) {
 
             if (i == 0) {
-                //printf("rainbowtab[%d][0]=wordstab[%d]\n", j, j);
+                printf("rainbowtab[%d][0]=%s\n", j, wordstab[j]);
                 h = (char *) hash(*(wordstab + j));
-                //printf("rainbowtab1[%d][%d]=%s\n", j, i + 1, h);
+                printf("rainbowtab1[%d][%d]=%s\n", j, i + 1, h);
             }
 
             if (i > 0 && i % 2 == 0) {
                 h = (char *) hash(r);
-                //printf("rainbowtab2[%d][%d]=%s\n", j, i + 1, h);
+                printf("rainbowtab2[%d][%d]=%s\n", j, i + 1, h);
             }
 
 
             if (i % 2 != 0) {
-                r = (char *) reduce(h, depth, passw_size, passw_type);
-                //printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
+                r = (char *) red(h, i, passw_size, passw_type);
+                printf("rainbowtab3[%d][%d]=%s\n", j, i + 1, r);
             }
 
             if (i == depth - 1) {
                 rainbowtab[j][1] = h;
+            	//strcpy(rainbowtab[j][1],h);
             }
         }
 
+        //strcpy(rainbowtab[j][1],*(wordstab + j));
         rainbowtab[j][0] = *(wordstab + j);
     }
 
     //quicksort(rainbowtab, 0, n - 1);
 
     for (i = 0; i < n; i++) {
-        //printf("tab[%d]: %s\n", i, rainbowtab[i][1]);
+        //printf("tab[%d]: %s %s\n", i,rainbowtab[i][0], rainbowtab[i][1]);
     }
 
     return rainbowtab;

@@ -18,4 +18,6 @@ char *hash(char *);
 
 char *reduce(char *, int, int, int);
 
+char *red(char *, int, int, int);
+
 char ***createRainbowTable(char *wordstab[], int, int, int, int);
