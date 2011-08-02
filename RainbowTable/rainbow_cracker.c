@@ -53,7 +53,7 @@ char* crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int
         if (hashFound == 0) {
             /*recukcja i zahashowanie szukanego stringa*/
             //printf("Przeksztalcam: %s->",hashTmp);
-            strcpy(hashTmp, (char *) reduce(hashTmp, depth, passSize, passw_type));
+            strcpy(hashTmp, (char *) red(hashTmp, depth, passSize, passw_type));
             //printf("%s->",hashTmp);
             strcpy(hashTmp, (char *) hash(hashTmp));
             //printf("%s\n",hashTmp);
@@ -84,8 +84,8 @@ char* crackPassword(char *str, char ***rainbowTable, int tabSize, int depth, int
             free(hashTmp);
             return passTmp;
         }
-        //passTmp =(char *)reduce(hashTmp,depth,10,passw_type);
-        strcpy(passTmp, (char *) reduce(hashTmp, depth, passSize, passw_type));
+        //passTmp =(char *)red(hashTmp,depth,10,passw_type);
+        strcpy(passTmp, (char *) red(hashTmp, depth, passSize, passw_type));
         i++;
     }
 

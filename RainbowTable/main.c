@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
 #include "mpi.h"
 
 #define TAG 1
@@ -111,15 +112,15 @@ int main(int argc, char *argv[]) {
     }
 
     if (argc > 1 && strcmp(argv[1], "-gen") == 0) {
+
         /* INICJALIZACJA MPI */
         MPI_Init(0, 0);
         MPI_Comm_rank(MPI_COMM_WORLD, &rank);
         MPI_Comm_size(MPI_COMM_WORLD, &lp);
 
         if (rank == 0) {
-            /* pobranie tablicy hasel z pliku */
             passTab = (char**) readPassFile(filename_rt, passSize);
-            /* zliczenie ilosci pobranych hasel */
+
             while (passTab[passCount] != 0) {
                 passCount++;
             }
@@ -129,33 +130,25 @@ int main(int argc, char *argv[]) {
 
         /* WYSYLANIE DANYCH O POCZATKACH LANUCHOW */
         if (rank == 0) {
-        	/* Ropoczecie zliczania czasu po wejsciu w proces komunikacji miedzy procesami i generowania tablicy teczowej */
-        	startClock = clock();
-        	time(&start);
-
-            //printf("Zczytanych hasel: %d\n", passCount);
-            /* obliczenie wielkosci czesci tablicy przydzielanych dla kazdego procesu */
+            /* Ropoczecie zliczania czasu po wejsciu w proces komunikacji miedzy procesami i generowania tablicy teczowej */
+            startClock = clock();
+            time(&start);
             workSize = passCount / lp;
             workRestSize = passCount % lp;
-            //printf("Hasel przydzielonych do jednego procesu: %d\n", workSize);
-
+            
             for (dest = 1; dest < lp; dest++) {
                 MPI_Send(&workSize, 1, MPI_INT, dest, TAG, MPI_COMM_WORLD); /*wyslanie wiadomosci o ilosci przydzielonych hasel*/
-
                 msgStream = (char *) malloc(workSize * (passSize + 1) * sizeof (char)); /*alokacja pamieci dla lancucha skladajacego sie z napisow czesci tablicy*/
+
                 /* Laczenie napisow, gdzie '\n' oddziela poszczegolne wyrazy */
                 i = (dest - 1) * workSize;
-                strcpy(msgStream,"");
+                strcpy(msgStream, "");
                 while (i < workSize * dest) {
-                	//printf("passTab[%d]=%s\n",i,passTab[i]);
                     strcat(msgStream, passTab[i]);
                     strcat(msgStream, "\n");
                     i++;
                 }
-                //printf("Wynik polaczenia %d[rozmiar: %d]:\n%s\n", dest, strlen(msgStream), msgStream);
-
                 MPI_Send(msgStream, strlen(msgStream) + 1, MPI_CHAR, dest, TAG, MPI_COMM_WORLD); /*wyslanie lancucha z polaczonymi haslami*/
-
                 free(msgStream);
                 msgStream = NULL;
             }
@@ -163,13 +156,8 @@ int main(int argc, char *argv[]) {
             passTab = passTab + workSize * (lp - 1);
         } else {
             MPI_Recv(&workSize, 1, MPI_INT, 0, TAG, MPI_COMM_WORLD, &status); /*odebranie wiadomosci o ilosci przydzielonych hasel*/
-            //printf("Odebrano [workSize: %d]\n", workSize);
-
             msgStream = (char *) malloc(workSize * (passSize + 1) * sizeof (char));
-
             MPI_Recv(msgStream, workSize * (passSize + 1) + 1, MPI_CHAR, 0, TAG, MPI_COMM_WORLD, &status); /*odebranie lancucha z polaczonymi haslami*/
-            //printf("Odebrano lancuch[rozmiar: %d]:\n%s\n", strlen(msgStream), msgStream);
-
             passTab = (char **) malloc((workSize + 1) * sizeof (char *));
             for (i = 0; i < workSize; i++) {
                 passTab[i] = (char *) malloc((passSize + 1) * sizeof (char));
@@ -187,14 +175,10 @@ int main(int argc, char *argv[]) {
         }
 
         /* GENEROWANIE LANCUCHOW */
-
-
         rainbowTab = (char ***) createRainbowTable(passTab, depth, workSize + workRestSize, passSize, passType);
-
         MPI_Barrier(MPI_COMM_WORLD);
 
         /* WYSLANIE I ODEBRANIE KONCOWYCH LANCUCHOW */
-
         if (rank != 0) {
             msgStream = (char *) malloc(workSize * (passSize + 1 + hashSize + 1));
             i = 0;
@@ -207,16 +191,13 @@ int main(int argc, char *argv[]) {
                 strcat(msgStream, "\n");
                 i++;
             }
-
             MPI_Send(msgStream, strlen(msgStream) + 1, MPI_CHAR, 0, TAG, MPI_COMM_WORLD);
-            /*printf("Wyslano lancuch koncowy z proc %d: %s/n",rank,msgStream);*/
             free(msgStream);
         } else {
             msgTab = (char **) malloc((lp - 1) * sizeof (char *));
             for (src = 1; src < lp; src++) {
                 msgTab[src - 1] = malloc(workSize * (passSize + 1 + hashSize + 1) * sizeof (char));
                 MPI_Recv(msgTab[src - 1], workSize * (passSize + 1 + hashSize + 1) + 1, MPI_CHAR, src, TAG, MPI_COMM_WORLD, &status);
-                //printf("Odebrano lancuch koncowy z %d: %s\n", src, msgTab[src - 1]);
             }
         }
 
@@ -262,21 +243,13 @@ int main(int argc, char *argv[]) {
             /* Zakonczenie zliczania czasu po posortowaniu tablicy */
             endClock = clock();
             time(&end);
-            timeDiff = (endClock - startClock)/(double)CLOCKS_PER_SEC;
-/*
-            printf("|---> WYGENEROWANA TABLICA TECZOWA <---|\n");
-            for (i = 0; i < passCount; i++) {
-                printf("%s -> %s\n", finalRainbowTab[i][0], finalRainbowTab[i][1]);
-            }
-            printf("----------------------------------------\n");
-*/
-            printf("Czas wygenerowania tablicy, skladajacej sie z %d wierszy, wynosi %.4lf || %.4lf\n",passCount,timeDiff,difftime(end,start));
-            printf("Parametry wywolania: n=%d, p=%d, t=%d, d=%d\n",lp,passSize,passType,depth);
+            timeDiff = (endClock - startClock) / (double) CLOCKS_PER_SEC;
+
+            printf("Czas wygenerowania tablicy, skladajacej sie z %d wierszy, wynosi: %.4lf s\n", passCount, difftime(end, start));
+            printf("Parametry wywolania: n=%d, p=%d, t=%d, d=%d\n", lp, passSize, passType, depth);
             printf("---------------------------------------------------------------------------------\n");
 
             saveRTabToFile(filename_out, finalRainbowTab, passCount, depth, passSize, passType);
-
-            /*crackPassword("AB.pF9XiT7ZVE", finalRainbowTab, passCount, depth, passSize, passType);*/
 
             for (i = 0; i < passCount; i++) {
                 free(finalRainbowTab[i][0]);
@@ -291,11 +264,8 @@ int main(int argc, char *argv[]) {
     }
 
     if (argc > 1 && strcmp(argv[1], "-b") == 0) {
-
-
         FILE *fp;
         fp = fopen(filename_rt, "r");
-
         passCount = 0;
         depth = 0;
         passSize = 0;
@@ -309,19 +279,14 @@ int main(int argc, char *argv[]) {
             printf("Problem z odczytaniem wartosci z pliku!");
             return -1;
         }
-
         fclose(fp);
-
-        //printf("%d %d %d %d\n", passCount, depth, passSize, passType);
-
         rainbowTab = getRTabFromFile(filename_rt);
         if (rainbowTab == NULL) {
-        	printf("Problem z tablica teczowa!");
-        	return -1;
+            printf("Problem z tablica teczowa!");
+            return -1;
         }
         crackPassword(hash_rt, rainbowTab, passCount, depth, passSize, passType);
     }
-
     return 0;
 }
 
